@@ -131,7 +131,7 @@ class Translator extends Command
      */
     private function writeNewTranslationFile($filePath, $translations)
     {
-        file_put_contents($filePath, json_encode($translations, JSON_PRETTY_PRINT));
+        file_put_contents($filePath, json_encode($translations, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
     }
 
     /**
