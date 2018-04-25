@@ -109,7 +109,6 @@ class Translator extends Command
      */
     private function getProjectTranslationFiles()
     {
-        //$path = resource_path('lang');
         $path = config('laravel-translator.translations_output');
         $files = glob("{$path}/*.json", GLOB_BRACE);
 
