@@ -56,8 +56,10 @@ class Translator extends Command
     private function findProjectTranslationsKeys()
     {
         $allKeys = [];
-        $this->getTranslationKeysFromDir($allKeys, app_path());
-        $this->getTranslationKeysFromDir($allKeys, resource_path('views'));
+        $viewsDirectories = config('laravel-translator.views_directories');
+        foreach($viewsDirectories as $directory) {
+            $this->getTranslationKeysFromDir($allKeys, $directory);
+        }
         ksort($allKeys);
 
         return $allKeys;
@@ -107,7 +109,7 @@ class Translator extends Command
      */
     private function getProjectTranslationFiles()
     {
-        $path = resource_path('lang');
+        $path = config('laravel-translator.translations_output');
         $files = glob("{$path}/*.json", GLOB_BRACE);
 
         return $files;

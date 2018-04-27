@@ -18,5 +18,11 @@ class TranslatorServiceProvider extends ServiceProvider
                 \Translator\Command\Translator::class,
             ]);
         }
+
+        $this->mergeConfigFrom(__DIR__ . '/config/laravel-translator.php', 'laravel-translator');
+
+        $this->publishes([
+            __DIR__ . '/config/laravel-translator.php' => base_path('config/laravel-translator.php'),
+        ], 'config');
     }
 }
