@@ -72,6 +72,27 @@ also you can use params on translation keys
 }
 ```
 
+### Customization
+You can change the default path of views to scan and the output of the json translation files.
+
+First, publish the configuration file.
+
+```
+php artisan vendor:publish --provider="Translator\TranslatorServiceProvider"
+```
+
+On ``config/laravel-translator.php`` you can change the default values of `views_directories` and `translations_output`
+
+```
+return [
+    'views_directories' => [
+        app_path(),
+        resource_path('views'),
+    ],
+    'translations_output' => resource_path('lang'),
+];
+```
+
 ### Tips
  - Laravel `trans(...)` function doesn't use json files for translation, so you'd better using `__(...)` or it's alias `lang(...)` on php files and `@lang(...)` or `{{ lang(...) }}` on blade files.
  - Do not use variables on translation functions, the scanner just get the key if it's a string
