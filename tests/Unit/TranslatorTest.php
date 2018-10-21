@@ -18,16 +18,11 @@ class TranslatorTest extends TestCase
     {
         $this->config = $this->createMock(ConfigResolver::class);
         $this->config
-            ->expects($this->at(0))
             ->method('get')
-            ->with('laravel-translator.views_directories')
-            ->willReturn([]);
-
-        $this->config
-            ->expects($this->at(1))
-            ->method('get')
-            ->with('laravel-translator.translations_output')
-            ->willReturn(__DIR__.'/tests/var/output');
+            ->willReturnOnConsecutiveCalls(
+                [__DIR__.'/../Fixtures/Class', __DIR__.'/../Fixtures/View'],
+                __DIR__.'/../Fixtures/Output'
+            );
 
         $this->translator = new Translator($this->config);
     }
