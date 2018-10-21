@@ -6,19 +6,22 @@ use Illuminate\Console\Command;
 
 class Translator extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'translator:update';
 
-    /**
-     * @var string
-     */
     protected $description = 'Search new keys and update translation file';
+
+    /** @var ConfigResolver */
+    private $config;
+
+    public function __construct(ConfigResolver $config)
+    {
+        $this->config = $config;
+
+        parent::__construct();
+    }
 
     /**
      * Execute the console command.
-     *
      * @return void
      */
     public function handle()
@@ -28,7 +31,7 @@ class Translator extends Command
 
         foreach ($translationFiles as $file) {
             $translationData = $this->getAlreadyTranslatedKeys($file);
-            $this->line("lang " . str_replace('.json', '', basename($file)));
+            $this->line("lang ".str_replace('.json', '', basename($file)));
             $added = [];
 
             foreach ($translationKeys as $key) {
@@ -56,8 +59,8 @@ class Translator extends Command
     private function findProjectTranslationsKeys()
     {
         $allKeys = [];
-        $viewsDirectories = config('laravel-translator.views_directories');
-        foreach($viewsDirectories as $directory) {
+        $viewsDirectories = $this->config->get('laravel-translator.views_directories');
+        foreach ($viewsDirectories as $directory) {
             $this->getTranslationKeysFromDir($allKeys, $directory);
         }
         ksort($allKeys);
@@ -109,7 +112,7 @@ class Translator extends Command
      */
     private function getProjectTranslationFiles()
     {
-        $path = config('laravel-translator.translations_output');
+        $path = $this->config->get('laravel-translator.translations_output');
         $files = glob("{$path}/*.json", GLOB_BRACE);
 
         return $files;
@@ -133,7 +136,7 @@ class Translator extends Command
      */
     private function writeNewTranslationFile($filePath, $translations)
     {
-        file_put_contents($filePath, json_encode($translations, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+        file_put_contents($filePath, json_encode($translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
 
     /**
