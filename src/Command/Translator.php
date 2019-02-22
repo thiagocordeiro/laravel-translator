@@ -124,7 +124,12 @@ class Translator extends Command
      */
     private function getAlreadyTranslatedKeys($filePath)
     {
-        $current = json_decode(file_get_contents($filePath), true);
+        $fileContent = file_get_contents($filePath);
+        if(!empty(trim($fileContent))){
+            $current = json_decode($fileContent, true);
+        } else {
+            $current = [];
+        }
         ksort($current);
 
         return $current;
