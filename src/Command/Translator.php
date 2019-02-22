@@ -125,10 +125,6 @@ class Translator extends Command
     private function getAlreadyTranslatedKeys($filePath)
     {
         $current = json_decode(file_get_contents($filePath), true);
-        // if translation file is empty
-        if(is_null($current)) {
-            $current = [];
-        }
         ksort($current);
 
         return $current;
