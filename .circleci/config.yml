@@ -2,7 +2,7 @@ version: 2
 jobs:
     build:
         docker:
-            -   image: circleci/php:7.1.3
+            -   image: circleci/php:7.1
         steps:
             - checkout
             -   run: sudo docker-php-ext-install zip
