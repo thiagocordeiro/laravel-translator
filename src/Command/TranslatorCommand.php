@@ -38,14 +38,19 @@ class TranslatorCommand extends Command
     {
         $keys = $this->scanner->scan();
         $files = $this->getProjectTranslationFiles();
+        $this->line('');
 
         foreach ($files as $file) {
             $newKeys = $this->fileHandler->handle($keys, $file);
-            $this->line("File {$file} processed successfully");
+            $lang = basename($file);
+            $updated = count($newKeys) > 0;
+            $this->info("Language {$lang} processed successfully ".($updated ? 'with' : 'without')." updates");
 
             array_map(function (string $key): void {
                 $this->warn("- {$key}");
             }, $newKeys);
+
+            $this->line('');
         }
     }
 

@@ -28,7 +28,7 @@ class Scanner
         }
 
         foreach ($directories as $directory) {
-            $allKeys = $this->scanDirectory($directory);
+            $allKeys = array_merge($allKeys, $this->scanDirectory($directory));
         }
 
         ksort($allKeys);
@@ -48,6 +48,7 @@ class Scanner
             $content = $this->getSanitizedContent($file);
 
             $keys = array_merge(
+                $keys,
                 $this->getTranslationKeysFromFunction('lang', $content),
                 $this->getTranslationKeysFromFunction('__', $content)
             );
@@ -70,14 +71,14 @@ class Scanner
     {
         preg_match_all("#{$functionName}\((.*?)\)#", $content, $matches);
 
-        if (empty($matches)) {
+        if (empty($matches) || empty($matches[1])) {
             return [];
         }
 
         $keys = [];
 
         foreach ($matches[1] as $match) {
-            preg_match('#\'(.*?)\'#', str_replace('"', "'", $match), $strings);
+            preg_match('#\'(.*?)\'#', $match, $strings);
 
             if (empty($strings)) {
                 continue;
