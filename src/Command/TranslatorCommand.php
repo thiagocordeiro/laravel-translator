@@ -2,6 +2,7 @@
 
 namespace Translator\Command;
 
+use Exception;
 use Illuminate\Console\Command;
 use Translator\Config\ConfigLoader;
 use Translator\Service\FileHandler;
@@ -55,6 +56,16 @@ class TranslatorCommand extends Command
     {
         $path = $this->config->load('laravel-translator.translations_output');
 
-        return glob("{$path}/*.json", GLOB_BRACE);
+        if (!is_string($path)) {
+            throw new Exception('Invalid output configuration');
+        }
+
+        $files = glob("{$path}/*.json", GLOB_BRACE);
+
+        if (!$files) {
+            throw new Exception('Unable to load translation files');
+        }
+
+        return $files;
     }
 }

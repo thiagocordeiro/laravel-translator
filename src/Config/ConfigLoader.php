@@ -5,9 +5,9 @@ namespace Translator\Config;
 class ConfigLoader
 {
     /**
-     * @return string[]
+     * @return string|string[]
      */
-    public function load(string $key, ?string $default = null): array
+    public function load(string $key, ?string $default = null)
     {
         return config($key, $default);
     }

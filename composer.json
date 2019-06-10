@@ -22,11 +22,19 @@
   "require-dev": {
     "composer/composer": "^1.8",
     "squizlabs/php_codesniffer": "^3.4",
-    "slevomat/coding-standard": "^5.0"
+    "slevomat/coding-standard": "^5.0",
+    "phpstan/phpstan": "^0.11.8",
+    "phpunit/phpunit": "^7.5"
   },
   "scripts": {
     "cs:check": "phpcs --colors -ps",
-    "test:unit": "phpunit --testdox --color=always"
+    "test:unit": "phpunit --testdox --color=always",
+    "test:stan": "vendor/bin/phpstan analyse src --level=max --ansi",
+    "tests": [
+      "@cs:check",
+      "@test:unit",
+      "@test:stan"
+    ]
   },
   "autoload": {
     "psr-4": {

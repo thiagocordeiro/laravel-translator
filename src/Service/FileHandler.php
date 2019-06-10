@@ -2,6 +2,8 @@
 
 namespace Translator\Service;
 
+use Exception;
+
 class FileHandler
 {
     /**
@@ -34,15 +36,21 @@ class FileHandler
     /**
      * @return string[]
      */
-    private function getAlreadyTranslatedKeys(string $filePath): array
+    private function getAlreadyTranslatedKeys(string $path): array
     {
-        $fileContent = trim(file_get_contents($filePath));
+        $content = file_get_contents($path);
 
-        if (empty($fileContent)) {
+        if (!$content) {
+            throw new Exception('Unable to load translation file content');
+        }
+
+        $content = trim($content);
+
+        if (empty($content)) {
             return [];
         }
 
-        $current = json_decode($fileContent, true);
+        $current = json_decode($content, true);
         ksort($current);
 
         return $current;

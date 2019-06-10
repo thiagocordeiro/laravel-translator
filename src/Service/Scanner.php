@@ -2,6 +2,7 @@
 
 namespace Translator\Service;
 
+use Exception;
 use Translator\Config\ConfigLoader;
 
 class Scanner
@@ -22,6 +23,10 @@ class Scanner
         $allKeys = [];
         $directories = $this->config->load('laravel-translator.directories');
 
+        if (!is_array($directories)) {
+            throw new Exception('Invalid directories configuration');
+        }
+
         foreach ($directories as $directory) {
             $allKeys = $this->scanDirectory($directory);
         }
@@ -32,7 +37,7 @@ class Scanner
     }
 
     /**
-     * @return string
+     * @return string[]
      */
     private function scanDirectory(string $path): array
     {
@@ -42,10 +47,10 @@ class Scanner
         foreach ($files as $file) {
             $content = $this->getSanitizedContent($file);
 
-            $keys = array_merge([
+            $keys = array_merge(
                 $this->getTranslationKeysFromFunction('lang', $content),
-                $this->getTranslationKeysFromFunction('__', $content),
-            ]);
+                $this->getTranslationKeysFromFunction('__', $content)
+            );
         }
 
         return $keys;
@@ -53,7 +58,9 @@ class Scanner
 
     private function getSanitizedContent(string $filePath): string
     {
-        return str_replace("\n", ' ', file_get_contents($filePath));
+        $content = file_get_contents($filePath) ?? '';
+
+        return str_replace("\n", ' ', $content);
     }
 
     /**
