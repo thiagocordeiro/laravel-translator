@@ -41,7 +41,7 @@
       "Translator\\": "src/"
     },
     "files": [
-      "src/_helpers.php"
+      "src/helpers.php"
     ]
   },
   "autoload-dev": {

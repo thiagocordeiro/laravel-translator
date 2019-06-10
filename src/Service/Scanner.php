@@ -58,7 +58,7 @@ class Scanner
 
     private function getSanitizedContent(string $filePath): string
     {
-        $content = file_get_contents($filePath) ?? '';
+        $content = (string) file_get_contents($filePath) ?? '';
 
         return str_replace("\n", ' ', $content);
     }
@@ -68,7 +68,7 @@ class Scanner
      */
     private function getTranslationKeysFromFunction(string $functionName, string $content): array
     {
-        preg_match_all("#{$functionName}\((.*?)\)#", $content, $matches = []);
+        preg_match_all("#{$functionName}\((.*?)\)#", $content, $matches);
 
         if (empty($matches)) {
             return [];
@@ -77,7 +77,7 @@ class Scanner
         $keys = [];
 
         foreach ($matches[1] as $match) {
-            preg_match('#\'(.*?)\'#', str_replace('"', "'", $match), $strings = []);
+            preg_match('#\'(.*?)\'#', str_replace('"', "'", $match), $strings);
 
             if (empty($strings)) {
                 continue;
