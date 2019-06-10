@@ -1,28 +1,27 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Translator;
 
 use Illuminate\Support\ServiceProvider;
+use Translator\Command\TranslatorCommand;
 
 class TranslatorServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                \Translator\Command\Translator::class,
-            ]);
+            $this->commands([TranslatorCommand::class]);
         }
 
-        $this->mergeConfigFrom(__DIR__ . '/config/laravel-translator.php', 'laravel-translator');
+        $this->setupConfigs('laravel-translator');
+    }
 
-        $this->publishes([
-            __DIR__ . '/config/laravel-translator.php' => base_path('config/laravel-translator.php'),
-        ], 'config');
+    private function setupConfigs(string $name): void
+    {
+        $default = __DIR__."/../config/{$name}.php";
+        $custom = base_path("config/{$name}.php");
+
+        $this->mergeConfigFrom($default, $name);
+        $this->publishes([$default => $custom], 'config');
     }
 }

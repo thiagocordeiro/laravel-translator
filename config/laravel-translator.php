@@ -1,7 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 return [
-    'views_directories' => [
+    'directories' => [
         app_path(),
         resource_path('views'),
     ],
