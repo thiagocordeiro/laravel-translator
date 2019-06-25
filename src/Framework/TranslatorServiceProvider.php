@@ -1,9 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Translator;
+namespace Translator\Framework;
 
 use Illuminate\Support\ServiceProvider;
-use Translator\Command\TranslatorCommand;
 
 class TranslatorServiceProvider extends ServiceProvider
 {

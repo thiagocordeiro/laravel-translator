@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Translator\Config;
+namespace Translator\Application;
 
 class ConfigLoader
 {

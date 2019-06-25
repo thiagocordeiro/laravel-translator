@@ -1,60 +1,45 @@
 <?php declare(strict_types=1);
 
-namespace Translator\Service;
+namespace Translator\Sentence;
 
 use Exception;
-use Translator\Config\ConfigLoader;
 
 class Scanner
 {
-    /** @var ConfigLoader */
-    private $config;
-
-    public function __construct(ConfigLoader $config)
+    public function scan(string ...$directories): SentenceCollection
     {
-        $this->config = $config;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function scan(): array
-    {
-        $allKeys = [];
-        $directories = $this->config->load('laravel-translator.directories');
-
         if (!is_array($directories)) {
             throw new Exception('Invalid directories configuration');
         }
 
+        $collection = new SentenceCollection();
+
         foreach ($directories as $directory) {
-            $allKeys = array_merge($allKeys, $this->scanDirectory($directory));
+            $collection->push(...$this->scanDirectory($directory));
         }
 
-        ksort($allKeys);
-
-        return $allKeys;
+        return $collection;
     }
 
     /**
-     * @return string[]
+     * @return Sentence[]
      */
     private function scanDirectory(string $path): array
     {
         $files = glob_recursive("{$path}/*.php", GLOB_BRACE);
-        $keys = [];
+        $sentences = [];
 
         foreach ($files as $file) {
             $content = $this->getSanitizedContent($file);
 
-            $keys = array_merge(
-                $keys,
+            $sentences = array_merge(
+                $sentences,
                 $this->getTranslationKeysFromFunction('lang', $content),
                 $this->getTranslationKeysFromFunction('__', $content)
             );
         }
 
-        return $keys;
+        return $sentences;
     }
 
     private function getSanitizedContent(string $filePath): string
@@ -75,7 +60,7 @@ class Scanner
             return [];
         }
 
-        $keys = [];
+        $sentences = [];
 
         foreach ($matches[1] as $match) {
             preg_match('#\'(.*?)\'#', $match, $strings);
@@ -84,9 +69,9 @@ class Scanner
                 continue;
             }
 
-            $keys[$strings[1]] = $strings[1];
+            $sentences[] = new Sentence($strings[1], '');
         }
 
-        return $keys;
+        return $sentences;
     }
 }
