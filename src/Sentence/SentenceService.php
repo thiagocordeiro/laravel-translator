@@ -4,22 +4,26 @@ namespace Translator\Sentence;
 
 class SentenceService
 {
+    /** @var Scanner */
+    private $scanner;
+
     /** @var SentenceRepository */
     private $repository;
 
-    public function __construct(SentenceRepository $repository)
+    public function __construct(Scanner $scanner, SentenceRepository $repository)
     {
+        $this->scanner = $scanner;
         $this->repository = $repository;
     }
 
-    public function storeNewSentencesFromCollection(SentenceCollection $sentences)
+    public function storeNewSentencesFromCollection(SentenceCollection $sentences): void
     {
         foreach ($sentences as $sentence) {
             $this->storeNew($sentence);
         }
     }
 
-    public function storeNew(Sentence $sentence)
+    public function storeNew(Sentence $sentence): void
     {
         if ($this->repository->exists($sentence)) {
             return;

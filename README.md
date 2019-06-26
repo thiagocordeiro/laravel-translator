@@ -81,7 +81,7 @@ First, publish the configuration file.
 php artisan vendor:publish --provider="Translator\Framework\TranslatorServiceProvider"
 ```
 
-On ``config/laravel-translator.php`` you can change the default values of `views_directories` and `translations_output`
+On ``config/laravel-translator.php`` you can change the default values of `views_directories` and `output`
 
 ```
 return [
@@ -89,7 +89,7 @@ return [
         app_path(),
         resource_path('views'),
     ],
-    'translations_output' => resource_path('lang'),
+    'output' => resource_path('lang'),
 ];
 ```
 

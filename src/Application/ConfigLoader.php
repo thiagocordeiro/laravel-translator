@@ -2,13 +2,10 @@
 
 namespace Translator\Application;
 
-class ConfigLoader
+interface ConfigLoader
 {
     /**
      * @return string|string[]
      */
-    public function load(string $key, ?string $default = null)
-    {
-        return config($key, $default);
-    }
+    public function load(string $key, ?string $default = null);
 }
