@@ -52,7 +52,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Translator\\TranslatorServiceProvider"
+        "Translator\\Framework\\TranslatorServiceProvider"
       ]
     }
   }
