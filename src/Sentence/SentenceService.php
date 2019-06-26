@@ -25,10 +25,6 @@ class SentenceService
 
     public function storeNew(Sentence $sentence): void
     {
-        if ($this->repository->exists($sentence)) {
-            return;
-        }
-
         $this->repository->save($sentence);
     }
 }

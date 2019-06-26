@@ -35,7 +35,7 @@ class TranslatorCommand extends Command
 
     public function handle(): void
     {
-        $directories = $this->config->load('translator.directories');
+        $directories = $this->config->directories();
 
         $sentences = $this->scanner->scan(...$directories);
 

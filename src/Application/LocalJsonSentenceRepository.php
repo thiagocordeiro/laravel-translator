@@ -15,15 +15,13 @@ class LocalJsonSentenceRepository implements SentenceRepository
         $this->config = $config;
     }
 
-    public function exists(Sentence $sentence): bool
+    public function exists(Sentence $sentence, string $language): bool
     {
-        $languages = $this->config->load('translator.languages');
-        dd($languages);
-        // TODO: Implement exists() method.
     }
 
-    public function save(Sentence $sentence): void
+    public function save(Sentence $sentence, bool $force = false): void
     {
-        // TODO: Implement save() method.
+        $languages = $this->config->languages();
+        dd($languages);
     }
 }

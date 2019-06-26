@@ -4,7 +4,7 @@ namespace Translator\Sentence;
 
 interface SentenceRepository
 {
-    public function exists(Sentence $sentence): bool;
+    public function exists(Sentence $sentence, string $language): bool;
 
-    public function save(Sentence $sentence): void;
+    public function save(Sentence $sentence, bool $force = false): void;
 }

@@ -4,8 +4,9 @@ namespace Translator\Application;
 
 interface ConfigLoader
 {
-    /**
-     * @return string|string[]
-     */
-    public function load(string $key, ?string $default = null);
+    public function languages(): array;
+
+    public function directories(): array;
+
+    public function output(): string;
 }
