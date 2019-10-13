@@ -1,5 +1,10 @@
 <?php declare(strict_types=1);
-
+/**
+ |--------------------------------------------------------------------------
+ | Integration test
+ |--------------------------------------------------------------------------
+ | This test will be used by travis to check if installation and scan work properly (see .travis.yml)
+ */
 $expected = trim(json_encode([
     'Underscore: :foo, :bar' => 'test',
     'Lang: :foo, :bar' => '',
@@ -8,10 +13,10 @@ $expected = trim(json_encode([
     'Check offers to :planet' => '',
 ], JSON_PRETTY_PRINT));
 
-$actual = trim(file_get_contents("resources/lang/pt-br.json"));
+$received = trim(file_get_contents("resources/lang/pt-br.json"));
 
-if ($expected !== $actual) {
-    throw new Exception("Keys scanned does not match");
+if ($expected !== $received) {
+    throw new Exception(sprintf("Keys scanned does not match, expected: %s, received: %s", $expected, $received));
 }
 
 echo 'Integration works :)';
