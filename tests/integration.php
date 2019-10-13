@@ -7,7 +7,7 @@
  | This test will be used by travis to check if installation and scan work properly (see .travis.yml)
  */
 $expected = trim(json_encode([
-    'Underscore: :foo, :bar' => 'test',
+    'Underscore: :foo, :bar' => '',
     'Lang: :foo, :bar' => '',
     'Welcome, :name' => '',
     'Trip to :planet, check-in opens :time' => '',
