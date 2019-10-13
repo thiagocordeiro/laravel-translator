@@ -1,0 +1,19 @@
+# https://docs.travis-ci.com/user/languages/php/
+# https://docs.travis-ci.com/user/environment-variables/
+# https://stackoverflow.com/questions/21314381/how-to-correctly-require-a-specific-commit-in-composer-so-that-it-would-be-avail
+# https://stackoverflow.com/questions/32580821/how-can-i-customize-override-the-git-clone-step-in-travis-ci
+language: php
+php:
+    - '7.2'
+    - '7.3'
+
+git:
+    clone: false
+
+install:
+    - composer create-project --prefer-dist laravel/laravel blog
+    - cd blog
+    - composer require thiagocordeiro/laravel-translator:dev-$TRAVIS_BRANCH#$TRAVIS_COMMIT
+
+script:
+    - php artisan
