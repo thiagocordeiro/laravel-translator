@@ -37,7 +37,9 @@ class TranslationScannerTest extends TestCase
         $translations = $this->scanner->scan(...[$__dir]);
 
         $this->assertEquals(
-            [new Translation('Underscore: :foo, :bar', '')],
+            [
+                'Underscore: :foo, :bar' => new Translation('Underscore: :foo, :bar', ''),
+            ],
             $translations
         );
     }
@@ -49,7 +51,9 @@ class TranslationScannerTest extends TestCase
         $translations = $this->scanner->scan(...[$langDir]);
 
         $this->assertEquals(
-            [new Translation('Lang: :foo, :bar', '')],
+            [
+                'Lang: :foo, :bar' => new Translation('Lang: :foo, :bar', ''),
+            ],
             $translations
         );
     }
@@ -62,9 +66,9 @@ class TranslationScannerTest extends TestCase
 
         $this->assertEquals(
             [
-                new Translation('Welcome, :name', ''),
-                new Translation('Trip to :planet, check-in opens :time', ''),
-                new Translation('Check offers to :planet', ''),
+                'Welcome, :name' => new Translation('Welcome, :name', ''),
+                'Trip to :planet, check-in opens :time' => new Translation('Trip to :planet, check-in opens :time', ''),
+                'Check offers to :planet' => new Translation('Check offers to :planet', ''),
             ],
             $translations
         );
@@ -78,11 +82,11 @@ class TranslationScannerTest extends TestCase
 
         $this->assertEquals(
             [
-                new Translation('Welcome, :name', ''),
-                new Translation('Trip to :planet, check-in opens :time', ''),
-                new Translation('Check offers to :planet', ''),
-                new Translation('Underscore: :foo, :bar', ''),
-                new Translation('Lang: :foo, :bar', ''),
+                'Welcome, :name' => new Translation('Welcome, :name', ''),
+                'Trip to :planet, check-in opens :time' => new Translation('Trip to :planet, check-in opens :time', ''),
+                'Check offers to :planet' => new Translation('Check offers to :planet', ''),
+                'Underscore: :foo, :bar' => new Translation('Underscore: :foo, :bar', ''),
+                'Lang: :foo, :bar' => new Translation('Lang: :foo, :bar', ''),
             ],
             $translations
         );

@@ -63,7 +63,7 @@ class TranslationScanner
 
             $key = $matchKey[1] ?? '';
 
-            return array_merge($keys, [new Translation($key, '')]);
+            return array_merge($keys, [$key => new Translation($key, '')]);
         }, []);
     }
 }

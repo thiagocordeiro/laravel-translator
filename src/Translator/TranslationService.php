@@ -31,10 +31,13 @@ class TranslationService
 
         $translations = $this->scanner->scan(...$directories);
 
-        $this->storeTranslations(...$translations);
+        $this->storeTranslations($translations);
     }
 
-    private function storeTranslations(Translation ...$translations): void
+    /**
+     * @param Translation[] $translations
+     */
+    private function storeTranslations(array $translations): void
     {
         array_map(function (Translation $translation): void {
             $this->storeTranslation($translation);
