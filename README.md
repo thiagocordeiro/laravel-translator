@@ -25,7 +25,7 @@ return [
     ...
     'providers' => [
         ...
-        Translator\TranslatorServiceProvider::class,
+        Translator\Framework\TranslatorServiceProvider::class,
         ...
     ]
 ]
@@ -78,10 +78,10 @@ You can change the default path of views to scan and the output of the json tran
 First, publish the configuration file.
 
 ```
-php artisan vendor:publish --provider="Translator\TranslatorServiceProvider"
+php artisan vendor:publish --provider="Translator\Framework\TranslatorServiceProvider"
 ```
 
-On ``config/laravel-translator.php`` you can change the default values of `views_directories` and `translations_output`
+On ``config/laravel-translator.php`` you can change the default values of `views_directories` and `output`
 
 ```
 return [
@@ -89,7 +89,7 @@ return [
         app_path(),
         resource_path('views'),
     ],
-    'translations_output' => resource_path('lang'),
+    'output' => resource_path('lang'),
 ];
 ```
 

@@ -1,0 +1,19 @@
+version: 2
+jobs:
+    build:
+        docker:
+            -   image: circleci/php:7.2
+        steps:
+            - checkout
+            -   run: sudo docker-php-ext-install zip
+            -   restore_cache:
+                    keys:
+                        - v1-dependencies-{{ checksum "composer.lock" }}
+                        # fallback to using the latest cache if no exact match is found
+                        - v1-dependencies-
+            -   run: composer install -n --prefer-dist
+            -   save_cache:
+                    key: v1-dependencies-{{ checksum "composer.lock" }}
+                    paths:
+                        - ./vendor
+            -   run: composer run tests
