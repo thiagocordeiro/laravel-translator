@@ -1,6 +1,7 @@
 # Laravel-Translator
 
-Laravel-translator scans your project `resources/view/` and `app/` folder to find `lang(...)` and `__(...)` functions, then it create keys based on first parameter value and insert into json translation files.
+Laravel-translator scans your project `resources/view/` and `app/` folder to find `@lang(...)`, `lang(...)` and `__(...)`
+functions, then it create keys based on first parameter value and insert into json translation files.
 
 ### Installation
 
@@ -13,7 +14,7 @@ $ composer require thiagocordeiro/laravel-translator
 This package register the provider automatically,
 [See laravel package discover](https://laravel.com/docs/5.5/packages#package-discovery).
 
-After composer finish it's installation, you'll be able to update your project translation keys running the following command:
+After composer finish installing, you'll be able to update your project translation keys running the following command:
 ```sh
 $ php artisan translator:update
 ```
@@ -37,11 +38,13 @@ First you have to create your json translation files:
 app/
   resources/
     lang/
-      pt.json
+      pt-br.json
       es.json
       fr.json
+      ...
 ```
-Keep working as you are used to, when laravel built-in translation funcion can't find given key, it'll return itself, so if you create english keys, you don't need to create an english translation 
+Keep working as you are used to, when laravel built-in translation funcion can't find given key,
+it'll return itself, so if you create english keys, you don't need to create an english translation.
 ```html
 blade:
 <html>
@@ -81,15 +84,25 @@ First, publish the configuration file.
 php artisan vendor:publish --provider="Translator\Framework\TranslatorServiceProvider"
 ```
 
-On ``config/laravel-translator.php`` you can change the default values of `views_directories` and `output`
+On ``config/translator.php`` you can change the default values of `languages`, `directories`, `output`
+or if you have a different implementation to save/load translations, you can create your own `translation_repository`
+and replace on `container` config 
 
 ```
+use Translator\Framework\LaravelConfigLoader;
+use Translator\Infra\LaravelJsonTranslationRepository;
+
 return [
-    'views_directories' => [
+    'languages' => ['pt-br', 'es'],
+    'directories' => [
         app_path(),
         resource_path('views'),
     ],
     'output' => resource_path('lang'),
+    'container' => [
+        'config_loader' => LaravelConfigLoader::class,
+        'translation_repository' => LaravelJsonTranslationRepository::class,
+    ],
 ];
 ```
 
