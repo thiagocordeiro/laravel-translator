@@ -3,9 +3,12 @@
 namespace Translator\Framework;
 
 use Illuminate\Support\ServiceProvider;
-use Translator\Application\ConfigLoader;
-use Translator\Sentence\SentenceRepository;
+use Translator\Translator\ConfigLoader;
+use Translator\Translator\TranslationRepository;
 
+/**
+ * @codeCoverageIgnore
+ */
 class TranslatorServiceProvider extends ServiceProvider
 {
     public function boot(): void
@@ -21,7 +24,7 @@ class TranslatorServiceProvider extends ServiceProvider
     private function setupConfigs(): void
     {
         $name = 'translator';
-        $default = __DIR__."/../../config/{$name}.php";
+        $default = __DIR__."/{$name}.php";
         $custom = base_path("config/{$name}.php");
 
         $this->mergeConfigFrom($default, $name);
@@ -31,6 +34,6 @@ class TranslatorServiceProvider extends ServiceProvider
     private function setupContainer(): void
     {
         $this->app->bind(ConfigLoader::class, config('translator.container.config_loader'));
-        $this->app->bind(SentenceRepository::class, config('translator.container.sentence_repository'));
+        $this->app->bind(TranslationRepository::class, config('translator.container.sentence_repository'));
     }
 }

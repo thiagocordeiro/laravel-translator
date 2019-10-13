@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Translator\Sentence;
+namespace Translator\Translator;
 
-class Sentence
+class Translation
 {
     /** @var string */
     private $key;

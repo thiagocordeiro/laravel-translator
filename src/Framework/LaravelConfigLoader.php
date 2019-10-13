@@ -2,30 +2,55 @@
 
 namespace Translator\Framework;
 
-use Translator\Application\ConfigLoader;
+use Translator\Translator\ConfigLoader;
 
+/**
+ * @codeCoverageIgnore
+ */
 class LaravelConfigLoader implements ConfigLoader
 {
     public function languages(): array
     {
-        return $this->load('languages');
+        return $this->loadConfigInArray('languages');
     }
 
     public function directories(): array
     {
-        return $this->load('directories');
+        return $this->loadConfigInArray('directories');
     }
 
     public function output(): string
     {
-        return $this->load('output');
+        return $this->loadConfigInString('output');
+    }
+
+    private function loadConfigInArray(string $key): array
+    {
+        $values = $this->load($key);
+
+        if (!is_array($values)) {
+            return [];
+        }
+
+        return $values;
+    }
+
+    public function loadConfigInString(string $key): string
+    {
+        $value = $this->load($key);
+
+        if (!is_string($value)) {
+            return '';
+        }
+
+        return $value;
     }
 
     /**
      * @return string|string[]
      */
-    private function load(string $key, ?string $default = null)
+    private function load(string $key)
     {
-        return config("translator.{$key}", $default);
+        return config("translator.{$key}", null);
     }
 }

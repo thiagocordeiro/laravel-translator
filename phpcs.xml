@@ -30,6 +30,7 @@
         <exclude name="SlevomatCodingStandard.PHP.UselessParentheses.UselessParentheses"/>
         <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification"/>
         <exclude name="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax.DisallowedArrayTypeHintSyntax"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
@@ -48,5 +49,9 @@
         <properties>
             <property name="allowUseFromRootNamespace" value="true"/>
         </properties>
+    </rule>
+
+    <rule ref="Internal.NoCodeFound">
+        <severity>0</severity>
     </rule>
 </ruleset>

@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use Translator\Application\LocalJsonSentenceRepository;
 use Translator\Framework\LaravelConfigLoader;
+use Translator\Infra\LaravelJsonTranslationRepository;
 
 return [
     'languages' => ['pt-br', 'es'],
@@ -12,6 +12,6 @@ return [
     'output' => resource_path('lang'),
     'container' => [
         'config_loader' => LaravelConfigLoader::class,
-        'sentence_repository' => LocalJsonSentenceRepository::class,
+        'sentence_repository' => LaravelJsonTranslationRepository::class,
     ],
 ];

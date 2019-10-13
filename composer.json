@@ -11,11 +11,11 @@
   ],
   "config": {
     "platform": {
-      "php": "7.1.3"
+      "php": "7.2.0"
     }
   },
   "require": {
-    "php": ">=7.1.3",
+    "php": "^7.2",
     "ext-json": "*",
     "laravel/framework": ">=5.4.0"
   },
@@ -24,16 +24,16 @@
     "squizlabs/php_codesniffer": "^3.4",
     "slevomat/coding-standard": "^5.0",
     "phpstan/phpstan": "^0.11.8",
-    "phpunit/phpunit": "^7.5"
+    "phpunit/phpunit": "^8.0"
   },
   "scripts": {
-    "cs:check": "phpcs --colors -ps",
-    "test:unit": "phpunit --testdox --color=always",
+    "cs:check": "vendor/bin/phpcs --colors -ps",
     "test:stan": "vendor/bin/phpstan analyse src --level=max --ansi",
+    "test:unit": "vendor/bin/phpunit --testdox --color=always",
     "tests": [
       "@cs:check",
-      "@test:unit",
-      "@test:stan"
+      "@test:stan",
+      "@test:unit"
     ]
   },
   "autoload": {
@@ -46,7 +46,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Translator\\": "tests/"
+      "Tests\\Unit\\Translator\\": "tests/Unit"
     }
   },
   "extra": {

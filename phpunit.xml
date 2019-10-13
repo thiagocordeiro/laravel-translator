@@ -12,6 +12,9 @@
     <filter>
         <whitelist>
             <directory>src</directory>
+            <exclude>
+                <file>src/Framework/config.php</file>
+            </exclude>
         </whitelist>
     </filter>
 
