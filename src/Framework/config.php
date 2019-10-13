@@ -12,6 +12,6 @@ return [
     'output' => resource_path('lang'),
     'container' => [
         'config_loader' => LaravelConfigLoader::class,
-        'sentence_repository' => LaravelJsonTranslationRepository::class,
+        'translation_repository' => LaravelJsonTranslationRepository::class,
     ],
 ];
