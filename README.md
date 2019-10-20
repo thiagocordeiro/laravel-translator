@@ -111,6 +111,5 @@ return [
  - Do not use variables on translation functions, the scanner just get the key if it's a string
 
 ### Todo
-- Tests;
-- Support older laravel versions;
 - View for translate phrases;
+- Integration with some translation api (google or deepl) for automatic translations
