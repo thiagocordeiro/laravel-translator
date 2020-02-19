@@ -69,6 +69,15 @@ class TranslationScannerTest extends TestCase
                 'Welcome, :name' => new Translation('Welcome, :name', ''),
                 'Trip to :planet, check-in opens :time' => new Translation('Trip to :planet, check-in opens :time', ''),
                 'Check offers to :planet' => new Translation('Check offers to :planet', ''),
+                'Translations should also work with double quotes.' => new Translation(
+                    'Translations should also work with double quotes.',
+                    ''
+                ),
+                'Shouldn\\\'t escaped quotes within strings also be correctly added?' => new Translation(
+                    'Shouldn\\\'t escaped quotes within strings also be correctly added?',
+                    ''
+                ),
+                'Same goes for \"double quotes\".' => new Translation('Same goes for \"double quotes\".', ''),
             ],
             $translations
         );
@@ -85,6 +94,15 @@ class TranslationScannerTest extends TestCase
                 'Welcome, :name' => new Translation('Welcome, :name', ''),
                 'Trip to :planet, check-in opens :time' => new Translation('Trip to :planet, check-in opens :time', ''),
                 'Check offers to :planet' => new Translation('Check offers to :planet', ''),
+                'Translations should also work with double quotes.' => new Translation(
+                    'Translations should also work with double quotes.',
+                    ''
+                ),
+                'Shouldn\\\'t escaped quotes within strings also be correctly added?' => new Translation(
+                    'Shouldn\\\'t escaped quotes within strings also be correctly added?',
+                    ''
+                ),
+                'Same goes for \"double quotes\".' => new Translation('Same goes for \"double quotes\".', ''),
                 'Underscore: :foo, :bar' => new Translation('Underscore: :foo, :bar', ''),
                 'Lang: :foo, :bar' => new Translation('Lang: :foo, :bar', ''),
             ],

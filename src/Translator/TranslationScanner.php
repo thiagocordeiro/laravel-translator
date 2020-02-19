@@ -59,11 +59,13 @@ class TranslationScanner
         $matches = $matches[1] ?? [];
 
         return array_reduce($matches, function (array $keys, string $match) {
-            preg_match('#\'(.*?)\'#', str_replace('"', "'", $match), $matchKey);
+            preg_match("#(['\"])((?:\\\\\\1|.)*?)\\1#", $match, $matchKey);
 
-            $key = $matchKey[1] ?? '';
+            $key = $matchKey[2] ?? '';
 
-            return array_merge($keys, [$key => new Translation($key, '')]);
+            return $key ?
+                array_merge($keys, [$key => new Translation($key, '')]) :
+                $keys;
         }, []);
     }
 }
