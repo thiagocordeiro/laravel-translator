@@ -12,6 +12,9 @@ $expected = trim(json_encode([
     'Welcome, :name' => '',
     'Trip to :planet, check-in opens :time' => '',
     'Check offers to :planet' => '',
+    'Translations should also work with double quotes.' => '',
+    'Shouldn\\\'t escaped quotes within strings also be correctly added?' => '',
+    'Same goes for \"double quotes\".' => '',
 ], JSON_PRETTY_PRINT));
 
 $received = trim(file_get_contents("resources/lang/pt-br.json"));
