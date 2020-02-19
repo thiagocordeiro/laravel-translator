@@ -14,5 +14,17 @@
         <div>
             {{ __('Check offers to :planet', [':place' => 'Damogran']) }}
         </div>
+
+        <div>
+            {{ __("Translations should also work with double quotes.") }}
+        </div>
+
+        <div>
+            {{ __('Shouldn\'t escaped quotes within strings also be correctly added?') }}
+        </div>
+
+        <div>
+            {{ __("Same goes for \"double quotes\".") }}
+        </div>
     </body>
 </html>
