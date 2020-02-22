@@ -61,7 +61,7 @@ class TranslationScanner
         return array_reduce($matches, function (array $keys, string $match) {
             preg_match("#(['\"])((?:\\\\\\1|.)*?)\\1#", $match, $matchKey);
 
-            $key = $matchKey[2] ?? '';
+            $key = str_replace("\\'", "'", $matchKey[2] ?? '');
 
             return $key ?
                 array_merge($keys, [$key => new Translation($key, '')]) :

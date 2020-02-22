@@ -73,8 +73,8 @@ class TranslationScannerTest extends TestCase
                     'Translations should also work with double quotes.',
                     ''
                 ),
-                'Shouldn\\\'t escaped quotes within strings also be correctly added?' => new Translation(
-                    'Shouldn\\\'t escaped quotes within strings also be correctly added?',
+                'Shouldn\'t escaped quotes within strings also be correctly added?' => new Translation(
+                    'Shouldn\'t escaped quotes within strings also be correctly added?',
                     ''
                 ),
                 'Same goes for \"double quotes\".' => new Translation('Same goes for \"double quotes\".', ''),
@@ -98,8 +98,8 @@ class TranslationScannerTest extends TestCase
                     'Translations should also work with double quotes.',
                     ''
                 ),
-                'Shouldn\\\'t escaped quotes within strings also be correctly added?' => new Translation(
-                    'Shouldn\\\'t escaped quotes within strings also be correctly added?',
+                'Shouldn\'t escaped quotes within strings also be correctly added?' => new Translation(
+                    'Shouldn\'t escaped quotes within strings also be correctly added?',
                     ''
                 ),
                 'Same goes for \"double quotes\".' => new Translation('Same goes for \"double quotes\".', ''),

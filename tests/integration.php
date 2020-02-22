@@ -13,7 +13,7 @@ $expected = trim(json_encode([
     'Trip to :planet, check-in opens :time' => '',
     'Check offers to :planet' => '',
     'Translations should also work with double quotes.' => '',
-    'Shouldn\\\'t escaped quotes within strings also be correctly added?' => '',
+    'Shouldn\'t escaped quotes within strings also be correctly added?' => '',
     'Same goes for \"double quotes\".' => '',
 ], JSON_PRETTY_PRINT));
 

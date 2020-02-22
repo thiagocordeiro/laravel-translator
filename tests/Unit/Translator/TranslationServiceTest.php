@@ -53,7 +53,7 @@ class TranslationServiceTest extends TestCase
             [new Translation('Trip to :planet, check-in opens :time', '')],
             [new Translation('Check offers to :planet', '')],
             [new Translation('Translations should also work with double quotes.', '')],
-            [new Translation('Shouldn\\\'t escaped quotes within strings also be correctly added?', '')],
+            [new Translation('Shouldn\'t escaped quotes within strings also be correctly added?', '')],
             [new Translation('Same goes for \"double quotes\".', '')],
         ];
 
