@@ -14,7 +14,8 @@ $expected = trim(json_encode([
     'Check offers to :planet' => '',
     'Translations should also work with double quotes.' => '',
     'Shouldn\'t escaped quotes within strings also be correctly added?' => '',
-    'Same goes for \"double quotes\".' => '',
+    'Same goes for "double quotes".' => '',
+    'String using (parentheses).' => '',
 ], JSON_PRETTY_PRINT));
 
 $received = trim(file_get_contents("resources/lang/pt-br.json"));

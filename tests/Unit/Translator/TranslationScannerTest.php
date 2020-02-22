@@ -77,7 +77,8 @@ class TranslationScannerTest extends TestCase
                     'Shouldn\'t escaped quotes within strings also be correctly added?',
                     ''
                 ),
-                'Same goes for \"double quotes\".' => new Translation('Same goes for \"double quotes\".', ''),
+                'Same goes for "double quotes".' => new Translation('Same goes for "double quotes".', ''),
+                'String using (parentheses).' => new Translation('String using (parentheses).', ''),
             ],
             $translations
         );
@@ -102,7 +103,8 @@ class TranslationScannerTest extends TestCase
                     'Shouldn\'t escaped quotes within strings also be correctly added?',
                     ''
                 ),
-                'Same goes for \"double quotes\".' => new Translation('Same goes for \"double quotes\".', ''),
+                'Same goes for "double quotes".' => new Translation('Same goes for "double quotes".', ''),
+                'String using (parentheses).' => new Translation('String using (parentheses).', ''),
                 'Underscore: :foo, :bar' => new Translation('Underscore: :foo, :bar', ''),
                 'Lang: :foo, :bar' => new Translation('Lang: :foo, :bar', ''),
             ],
