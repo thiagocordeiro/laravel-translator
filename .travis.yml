@@ -5,6 +5,19 @@ php:
     - 7.4
 
 script:
-    - .travis/unit
+    - composer install
+
+    # code standards
+    - vendor/bin/phpcs --colors -ps
+
+    # static analysis
+    - vendor/bin/phpstan analyse src --level=max --ansi
+
+    # Unit Tests
+    - vendor/bin/phpunit --testdox --color=always
+
+    # integration
     - .travis/integration
+    - cd blog ; php artisan translator:update ; php integration.php
+
 
