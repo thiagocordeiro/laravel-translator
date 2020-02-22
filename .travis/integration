@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# prepare
+composer create-project --prefer-dist laravel/laravel blog && \
+  cd blog && \
+  composer require thiagocordeiro/laravel-translator:dev-master#$TRAVIS_COMMIT  && \
+  cp -R vendor/thiagocordeiro/laravel-translator/tests/Fixtures/App/Functions app  && \
+  cp -R vendor/thiagocordeiro/laravel-translator/tests/Fixtures/App/View resources/views  && \
+  rm -rf resources/lang/en  && \
+  echo "{}" >> resources/lang/pt-br.json  && \
+  echo "{}" >> resources/lang/es.json  && \
+  cp vendor/thiagocordeiro/laravel-translator/tests/integration.php ./
+
+# test
+php artisan translator:update
+php integration.php
