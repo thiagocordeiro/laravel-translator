@@ -105,7 +105,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
     {
         file_put_contents(
             $this->getFileNameForLanguage($language),
-            json_encode($this->fileCache[$language], JSON_PRETTY_PRINT)
+            json_encode($this->fileCache[$language], JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)
         );
     }
 }
