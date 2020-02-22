@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# prepare
-composer install
-
-# test
-composer cs:check
-composer test:stan
-composer test:unit
