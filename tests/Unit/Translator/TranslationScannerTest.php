@@ -79,6 +79,10 @@ class TranslationScannerTest extends TestCase
                 ),
                 'Same goes for "double quotes".' => new Translation('Same goes for "double quotes".', ''),
                 'String using (parentheses).' => new Translation('String using (parentheses).', ''),
+                "Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\" => new Translation(
+                    "Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\",
+                    ''
+                ),
             ],
             $translations
         );
@@ -107,6 +111,10 @@ class TranslationScannerTest extends TestCase
                 'String using (parentheses).' => new Translation('String using (parentheses).', ''),
                 'Underscore: :foo, :bar' => new Translation('Underscore: :foo, :bar', ''),
                 'Lang: :foo, :bar' => new Translation('Lang: :foo, :bar', ''),
+                "Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\" => new Translation(
+                    "Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\",
+                    ''
+                ),
             ],
             $translations
         );

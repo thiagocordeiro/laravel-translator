@@ -16,6 +16,7 @@ $expected = trim(json_encode([
     'Shouldn\'t escaped quotes within strings also be correctly added?' => '',
     'Same goes for "double quotes".' => '',
     'String using (parentheses).' => '',
+    "Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\" => '',
 ], JSON_PRETTY_PRINT));
 
 $received = trim(file_get_contents("resources/lang/pt-br.json"));
