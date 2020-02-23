@@ -54,14 +54,14 @@ class TranslationScanner
      */
     private function getKeysFromFunction(string $functionName, string $content): array
     {
-        preg_match_all("#{$functionName}\((.*?)\)#", $content, $matches);
+        preg_match_all("#{$functionName} *\( *((['\"])((?:\\\\\\2|.)*?)\\2)#", $content, $matches);
 
         $matches = $matches[1] ?? [];
 
         return array_reduce($matches, function (array $keys, string $match) {
-            preg_match("#(['\"])((?:\\\\\\1|.)*?)\\1#", $match, $matchKey);
-
-            $key = $matchKey[2] ?? '';
+            $quote = $match[0];
+            $match = trim($match, $quote);
+            $key = ($quote === '"') ? stripcslashes($match) : str_replace(["\\'", "\\\\"], ["'", "\\"], $match);
 
             return $key ?
                 array_merge($keys, [$key => new Translation($key, '')]) :

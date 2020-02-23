@@ -26,5 +26,13 @@
         <div>
             {{ __("Same goes for \"double quotes\".") }}
         </div>
+
+        <div>
+            {{ __('String using (parentheses).') }}
+        </div>
+
+        <div>
+            {{ __("Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\") }}
+        </div>
     </body>
 </html>

@@ -53,12 +53,14 @@ class TranslationServiceTest extends TestCase
             [new Translation('Trip to :planet, check-in opens :time', '')],
             [new Translation('Check offers to :planet', '')],
             [new Translation('Translations should also work with double quotes.', '')],
-            [new Translation('Shouldn\\\'t escaped quotes within strings also be correctly added?', '')],
-            [new Translation('Same goes for \"double quotes\".', '')],
+            [new Translation('Shouldn\'t escaped quotes within strings also be correctly added?', '')],
+            [new Translation('Same goes for "double quotes".', '')],
+            [new Translation('String using (parentheses).', '')],
+            [new Translation("Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\", '')],
         ];
 
         $this->repository
-            ->expects($this->exactly(6))
+            ->expects($this->exactly(8))
             ->method('save')
             ->withConsecutive(...$translations);
 
