@@ -61,7 +61,7 @@ class TranslationScanner
         return array_reduce($matches, function (array $keys, string $match) {
             $quote = $match[0];
             $match = trim($match, $quote);
-            $key = ($quote === '"') ? stripcslashes($match) : str_replace("\\'", "'", $match);
+            $key = ($quote === '"') ? stripcslashes($match) : str_replace(["\\'", "\\\\"], ["'", "\\"], $match);
 
             return $key ?
                 array_merge($keys, [$key => new Translation($key, '')]) :
