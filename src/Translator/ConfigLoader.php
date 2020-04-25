@@ -10,6 +10,6 @@ interface ConfigLoader
 
     public function output(): string;
 
-    public function scannable_files(): string;
+    public function scannableFiles(): string;
 
 }

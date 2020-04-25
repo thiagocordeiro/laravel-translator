@@ -6,6 +6,14 @@ use Translator\Translator\Exception\InvalidDirectoriesConfiguration;
 
 class TranslationScanner
 {
+    /** @var ConfigLoader */
+    private $config;
+
+    public function __construct(ConfigLoader $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @return Translation[]
      * @throws InvalidDirectoriesConfiguration
@@ -29,7 +37,7 @@ class TranslationScanner
      */
     private function scanDirectory(string $path): array
     {
-        $scannable_files = $this->config->scannable_files();
+        $scannable_files = $this->config->scannableFiles();
         $files = glob_recursive("{$path}/*.{{$scannable_files}}", GLOB_BRACE);
 
         return array_reduce($files, function (array $keys, $file): array {

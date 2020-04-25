@@ -24,7 +24,7 @@ class LaravelConfigLoader implements ConfigLoader
         return $this->loadConfigInString('output');
     }
 
-    public function scannable_files(): string
+    public function scannableFiles(): string
     {
         return $this->loadConfigInString('scannable_files');
     }
