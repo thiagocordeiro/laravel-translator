@@ -24,6 +24,11 @@ class LaravelConfigLoader implements ConfigLoader
         return $this->loadConfigInString('output');
     }
 
+    public function extensions(): array
+    {
+        return $this->loadConfigInArray('extensions');
+    }
+
     private function loadConfigInArray(string $key): array
     {
         $values = $this->load($key);

@@ -10,6 +10,7 @@ return [
         resource_path('views'),
     ],
     'output' => resource_path('lang'),
+    'extensions' => ['php'],
     'container' => [
         'config_loader' => LaravelConfigLoader::class,
         'translation_repository' => LaravelJsonTranslationRepository::class,

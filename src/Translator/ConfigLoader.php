@@ -9,4 +9,6 @@ interface ConfigLoader
     public function directories(): array;
 
     public function output(): string;
+
+    public function extensions(): array;
 }

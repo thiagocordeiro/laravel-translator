@@ -3,6 +3,7 @@
 namespace Translator\Translator;
 
 use Translator\Translator\Exception\InvalidDirectoriesConfiguration;
+use Translator\Translator\Exception\InvalidExtensionsConfiguration;
 
 class TranslationService
 {
@@ -24,12 +25,14 @@ class TranslationService
 
     /**
      * @throws InvalidDirectoriesConfiguration
+     * @throws InvalidExtensionsConfiguration
      */
     public function scanAndSaveNewKeys(): void
     {
         $directories = $this->config->directories();
+        $extensions = $this->config->extensions();
 
-        $translations = $this->scanner->scan(...$directories);
+        $translations = $this->scanner->scan($extensions, $directories);
 
         $this->storeTranslations($translations);
     }
