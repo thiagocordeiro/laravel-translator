@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Translator\Framework;
 
@@ -22,6 +22,11 @@ class LaravelConfigLoader implements ConfigLoader
     public function output(): string
     {
         return $this->loadConfigInString('output');
+    }
+
+    public function scanable_files(): string
+    {
+        return $this->loadConfigInString('scanable_files');
     }
 
     private function loadConfigInArray(string $key): array

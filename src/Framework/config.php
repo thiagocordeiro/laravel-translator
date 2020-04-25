@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 use Translator\Framework\LaravelConfigLoader;
 use Translator\Infra\LaravelJsonTranslationRepository;
 
 return [
     'languages' => ['pt-br', 'es'],
+    'scanable_files' => 'php', //php,vue
     'directories' => [
         app_path(),
         resource_path('views'),

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Translator\Translator;
 
@@ -9,4 +9,7 @@ interface ConfigLoader
     public function directories(): array;
 
     public function output(): string;
+    
+    public function scanable_files(): string;
+
 }
