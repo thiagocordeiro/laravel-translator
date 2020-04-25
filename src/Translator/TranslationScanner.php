@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Translator\Translator;
 
@@ -6,26 +6,17 @@ use Translator\Translator\Exception\InvalidDirectoriesConfiguration;
 
 class TranslationScanner
 {
-
-    /** @var ConfigLoader */
-    private $config;
-
-    public function __construct(ConfigLoader $config)
-    {
-        $this->config = $config;
-    }
-
     /**
      * @return Translation[]
      * @throws InvalidDirectoriesConfiguration
      */
-    public function scan(string...$directories): array
+    public function scan(string ...$directories): array
     {
         if (empty($directories)) {
             throw new InvalidDirectoriesConfiguration();
         }
 
-        return array_reduce($directories, function (array $collection, string $directory): array{
+        return array_reduce($directories, function (array $collection, string $directory): array {
             return array_merge(
                 $collection,
                 $this->scanDirectory($directory)
@@ -38,10 +29,10 @@ class TranslationScanner
      */
     private function scanDirectory(string $path): array
     {
-        $scanable_files = $this->config->scanable_files();
-        $files = glob_recursive("{$path}/*.{{$scanable_files}}", GLOB_BRACE);
+        $scannable_files = $this->config->scannable_files();
+        $files = glob_recursive("{$path}/*.{{$scannable_files}}", GLOB_BRACE);
 
-        return array_reduce($files, function (array $keys, $file): array{
+        return array_reduce($files, function (array $keys, $file): array {
             $content = $this->getFileContent($file);
 
             return array_merge(
@@ -74,8 +65,8 @@ class TranslationScanner
             $key = ($quote === '"') ? stripcslashes($match) : str_replace(["\\'", "\\\\"], ["'", "\\"], $match);
 
             return $key ?
-            array_merge($keys, [$key => new Translation($key, '')]) :
-            $keys;
+                array_merge($keys, [$key => new Translation($key, '')]) :
+                $keys;
         }, []);
     }
 }
