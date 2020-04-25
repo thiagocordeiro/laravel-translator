@@ -3,23 +3,33 @@
 namespace Translator\Translator;
 
 use Translator\Translator\Exception\InvalidDirectoriesConfiguration;
+use Translator\Translator\Exception\InvalidExtensionsConfiguration;
 
 class TranslationScanner
 {
     /**
+     * @param string[] $extensions
+     * @param string[] $directories
      * @return Translation[]
      * @throws InvalidDirectoriesConfiguration
+     * @throws InvalidExtensionsConfiguration
      */
-    public function scan(string ...$directories): array
+    public function scan(array $extensions, array $directories): array
     {
+        if (empty($extensions)) {
+            throw new InvalidExtensionsConfiguration();
+        }
+
         if (empty($directories)) {
             throw new InvalidDirectoriesConfiguration();
         }
 
-        return array_reduce($directories, function (array $collection, string $directory): array {
+        $ext = implode(',', $extensions);
+
+        return array_reduce($directories, function (array $collection, string $directory) use ($ext): array {
             return array_merge(
                 $collection,
-                $this->scanDirectory($directory)
+                $this->scanDirectory($directory, $ext)
             );
         }, []);
     }
@@ -27,9 +37,9 @@ class TranslationScanner
     /**
      * @return Translation[]
      */
-    private function scanDirectory(string $path): array
+    private function scanDirectory(string $path, string $extensions): array
     {
-        $files = glob_recursive("{$path}/*.php", GLOB_BRACE);
+        $files = glob_recursive("{$path}/*.{{$extensions}}", GLOB_BRACE);
 
         return array_reduce($files, function (array $keys, $file): array {
             $content = $this->getFileContent($file);

@@ -45,6 +45,9 @@ class TranslationServiceTest extends TestCase
     public function testShouldScanAndSaveKeys(): void
     {
         $this->configLoader
+            ->method('extensions')
+            ->willReturn(['php']);
+        $this->configLoader
             ->method('directories')
             ->willReturn([$this->fixturesDir.'/App/View']);
 
@@ -72,6 +75,9 @@ class TranslationServiceTest extends TestCase
         $this->configLoader
             ->method('directories')
             ->willReturn([$this->fixturesDir.'/App/Functions/Lang']);
+        $this->configLoader
+            ->method('extensions')
+            ->willReturn(['php']);
 
         $this->repository
             ->method('exists')

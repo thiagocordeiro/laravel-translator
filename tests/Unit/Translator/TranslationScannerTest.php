@@ -27,14 +27,14 @@ class TranslationScannerTest extends TestCase
 
         $this->expectException(InvalidDirectoriesConfiguration::class);
 
-        $this->scanner->scan(...$directories);
+        $this->scanner->scan(['php'], $directories);
     }
 
     public function testShouldFindTranslationsForUnderscoreFunctions(): void
     {
         $__dir = $this->fixturesDir.'/App/Functions/UnderscoreUnderscore';
 
-        $translations = $this->scanner->scan(...[$__dir]);
+        $translations = $this->scanner->scan(['php'], [$__dir]);
 
         $this->assertEquals(
             [
@@ -48,7 +48,7 @@ class TranslationScannerTest extends TestCase
     {
         $langDir = $this->fixturesDir.'/App/Functions/Lang';
 
-        $translations = $this->scanner->scan(...[$langDir]);
+        $translations = $this->scanner->scan(['php'], [$langDir]);
 
         $this->assertEquals(
             [
@@ -58,11 +58,26 @@ class TranslationScannerTest extends TestCase
         );
     }
 
+    public function testShouldFindTranslationsForDifferentFileExtensions(): void
+    {
+        $langDir = $this->fixturesDir . '/App/View';
+
+        $translations = $this->scanner->scan(['vue'], [$langDir]);
+
+        $this->assertEquals(
+            [
+                'This is a vue component' => new Translation('This is a vue component', ''),
+                'Vue Component Title' => new Translation('Vue Component Title', ''),
+            ],
+            $translations
+        );
+    }
+
     public function testShouldFindTranslationsForBladeTemplates(): void
     {
-        $viewDir = $this->fixturesDir.'/App/View';
+        $viewDir = $this->fixturesDir . '/App/View';
 
-        $translations = $this->scanner->scan(...[$viewDir]);
+        $translations = $this->scanner->scan(['php'], [$viewDir]);
 
         $this->assertEquals(
             [
@@ -92,7 +107,7 @@ class TranslationScannerTest extends TestCase
     {
         $appDir = $this->fixturesDir.'/App';
 
-        $translations = $this->scanner->scan(...[$appDir]);
+        $translations = $this->scanner->scan(['php'], [$appDir]);
 
         $this->assertEquals(
             [
