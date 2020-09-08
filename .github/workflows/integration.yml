@@ -1,0 +1,49 @@
+name: Integration Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  integration:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Laravel
+      run: composer create-project --prefer-dist laravel/laravel blog
+
+    - name: Require translator package
+      run: composer require thiagocordeiro/laravel-translator:dev-master#$GITHUB_SHA -d blog/
+
+    - name: Copy Fixtures 1
+      run: cp -R tests/Fixtures/App/Functions blog/app
+
+    - name: Copy Fixtures 2
+      run: cp -R tests/Fixtures/App/View blog/resources/views
+
+    - name: Remove default english translation folder
+      run: rm -rf blog/resources/lang/en
+
+    - name: Create empty translation files
+      run: echo "{}" >> blog/resources/lang/pt-br.json && echo "{}" >> blog/resources/lang/es.json
+
+    - name: Copy integration test file
+      run: cp tests/integration.php blog/
+
+    - name: Run translation command
+      run: cd blog ; php artisan translator:update
+
+    - name: Check created files
+      run: cd blog ; php integration.php
+
+
+
+
+
+
+
