@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Tests
 
 on:
   push:
@@ -33,5 +33,11 @@ jobs:
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
-    - name: Run test suite
-      run: composer tests
+    - name: Check code standards
+      run: composer run cs:check
+      
+    - name: Check static analysis
+      run: composer run test:stan
+      
+    - name: Unit Tests
+      run: composer run test:unit
