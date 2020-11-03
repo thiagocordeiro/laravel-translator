@@ -9,7 +9,15 @@ on:
 jobs:
   integration:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        php: [8.0, 7.4, 7.3, 7.2]
+        laravel: [8.*, 7.*, 6.*]
+        dependency-version: [prefer-lowest, prefer-stable]
 
     steps:
     - uses: actions/checkout@v2
