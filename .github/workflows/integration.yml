@@ -26,7 +26,7 @@ jobs:
       run: composer create-project --prefer-dist laravel/laravel blog
 
     - name: Require translator package
-      run: composer require thiagocordeiro/laravel-translator:dev-${GITHUB_REF#refs/heads/}#$GITHUB_SHA -d blog/
+      run: composer require thiagocordeiro/laravel-translator:dev-master#$GITHUB_SHA -d blog/
 
     - name: Copy Fixtures 1
       run: cp -R tests/Fixtures/App/Functions blog/app
