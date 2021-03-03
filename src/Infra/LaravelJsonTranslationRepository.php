@@ -103,9 +103,12 @@ class LaravelJsonTranslationRepository implements TranslationRepository
 
     private function writeFile(string $language): void
     {
+        $content = $this->fileCache[$language];
+        ksort($content);
+
         file_put_contents(
             $this->getFileNameForLanguage($language),
-            json_encode($this->fileCache[$language], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+            json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
     }
 }
