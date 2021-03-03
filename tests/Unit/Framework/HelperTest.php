@@ -1,17 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit\Translator\Framework;
+namespace Translator\Tests\Unit\Framework;
 
 use PHPUnit\Framework\TestCase;
 
 class HelperTest extends TestCase
 {
-    /** @var string */
-    private $testDir;
+    private string $testDir;
 
     protected function setUp(): void
     {
-        $this->testDir = realpath(__DIR__.'/../..') ?? '';
+        $this->testDir = realpath(__DIR__ . '/../..') ?? '';
     }
 
     public function testGlobRecursive(): void

@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit\Translator\Infra;
+namespace Translator\Tests\Unit\Infra;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Translator\Infra\Exception\InvalidTranslationFile;
 use Translator\Infra\Exception\TranslationFileDoesNotExistForLanguage;
@@ -13,26 +12,20 @@ use Translator\Translator\Translation;
 
 class LaravelJsonTranslationRepositoryTest extends TestCase
 {
-    /** @var string */
-    private $translationPath;
-
-    /** @var MockObject|ConfigLoader */
-    private $configLoader;
-
-    /** @var LaravelJsonTranslationRepository */
-    private $repository;
+    private string $translationPath;
+    private LaravelJsonTranslationRepository $repository;
 
     protected function setUp(): void
     {
-        $this->translationPath = realpath(__DIR__.'/../../Fixtures/translations');
-        $this->configLoader = $this->createMock(ConfigLoader::class);
-        $this->configLoader
+        $this->translationPath = realpath(__DIR__ . '/../../Fixtures/translations');
+        $configLoader = $this->createMock(ConfigLoader::class);
+        $configLoader
             ->method('output')
             ->willReturn($this->translationPath);
 
         file_put_contents("{$this->translationPath}/fr.json", '{}');
 
-        $this->repository = new LaravelJsonTranslationRepository($this->configLoader);
+        $this->repository = new LaravelJsonTranslationRepository($configLoader);
     }
 
     public function testWhenFileForGivenLanguageDoesNotExistThenThrowException(): void

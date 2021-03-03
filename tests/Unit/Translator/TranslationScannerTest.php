@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit\Translator\Translator;
+namespace Translator\Tests\Unit\Translator;
 
 use PHPUnit\Framework\TestCase;
 use Translator\Translator\Exception\InvalidDirectoriesConfiguration;
@@ -9,15 +9,12 @@ use Translator\Translator\TranslationScanner;
 
 class TranslationScannerTest extends TestCase
 {
-    /** @var string */
-    private $fixturesDir;
-
-    /** @var TranslationScanner */
-    private $scanner;
+    private string $fixturesDir;
+    private TranslationScanner $scanner;
 
     protected function setUp(): void
     {
-        $this->fixturesDir = realpath(__DIR__.'/../../Fixtures');
+        $this->fixturesDir = realpath(__DIR__ . '/../../Fixtures');
         $this->scanner = new TranslationScanner();
     }
 
@@ -32,7 +29,7 @@ class TranslationScannerTest extends TestCase
 
     public function testShouldFindTranslationsForUnderscoreFunctions(): void
     {
-        $__dir = $this->fixturesDir.'/App/Functions/UnderscoreUnderscore';
+        $__dir = $this->fixturesDir . '/App/Functions/UnderscoreUnderscore';
 
         $translations = $this->scanner->scan(['php'], [$__dir]);
 
@@ -46,7 +43,7 @@ class TranslationScannerTest extends TestCase
 
     public function testShouldFindTranslationsForLangFunctions(): void
     {
-        $langDir = $this->fixturesDir.'/App/Functions/Lang';
+        $langDir = $this->fixturesDir . '/App/Functions/Lang';
 
         $translations = $this->scanner->scan(['php'], [$langDir]);
 
@@ -105,7 +102,7 @@ class TranslationScannerTest extends TestCase
 
     public function testShouldFindMultipleTranslationForDifferentFunctionsAndFiles(): void
     {
-        $appDir = $this->fixturesDir.'/App';
+        $appDir = $this->fixturesDir . '/App';
 
         $translations = $this->scanner->scan(['php'], [$appDir]);
 
