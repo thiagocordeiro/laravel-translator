@@ -8,20 +8,16 @@ on:
 
 jobs:
   integration:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: ENV
-      run: printenv
-
     - name: Install Laravel
       run: composer create-project --prefer-dist laravel/laravel blog
 
     - name: Require translator package
-      run: composer require thiagocordeiro/laravel-translator:dev-$GITHUB_HEAD_REF#$GITHUB_SHA -d blog/
+      run: composer require thiagocordeiro/laravel-translator:dev-$GITHUB_HEAD_REF -d blog/
 
     - name: Copy Fixtures 1
       run: cp -R tests/Fixtures/App/Functions blog/app
