@@ -9,26 +9,41 @@ use Translator\Translator\ConfigLoader;
  */
 class LaravelConfigLoader implements ConfigLoader
 {
+    /**
+     * @inheritDoc
+     */
     public function languages(): array
     {
         return $this->loadConfigInArray('languages');
     }
 
+    /**
+     * @inheritDoc
+     */
     public function directories(): array
     {
         return $this->loadConfigInArray('directories');
     }
 
+    /**
+     * @inheritDoc
+     */
     public function output(): string
     {
         return $this->loadConfigInString('output');
     }
 
+    /**
+     * @inheritDoc
+     */
     public function extensions(): array
     {
         return $this->loadConfigInArray('extensions');
     }
 
+    /**
+     * @return array<string>
+     */
     private function loadConfigInArray(string $key): array
     {
         $values = $this->load($key);
@@ -56,6 +71,6 @@ class LaravelConfigLoader implements ConfigLoader
      */
     private function load(string $key)
     {
-        return config("translator.{$key}", null);
+        return config("translator.{$key}");
     }
 }
