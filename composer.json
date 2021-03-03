@@ -9,22 +9,16 @@
       "email": "thiagoguetten@gmail.com"
     }
   ],
-  "config": {
-    "platform": {
-      "php": "7.2.0"
-    }
-  },
   "require": {
-    "php": "^7.2",
+    "php": "^7.4|^8.0",
     "ext-json": "*",
     "laravel/framework": ">=5.4.0"
   },
   "require-dev": {
     "composer/composer": "^1.8",
-    "squizlabs/php_codesniffer": "^3.4",
-    "slevomat/coding-standard": "^5.0",
-    "phpstan/phpstan": "^0.11.8",
-    "phpunit/phpunit": "^8.0"
+    "slevomat/coding-standard": "^6.0",
+    "phpstan/phpstan": "^0.12.0",
+    "phpunit/phpunit": "^9.0"
   },
   "scripts": {
     "cs:check": "vendor/bin/phpcs --colors -ps",
