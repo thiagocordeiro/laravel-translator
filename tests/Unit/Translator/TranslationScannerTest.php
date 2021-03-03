@@ -9,11 +9,8 @@ use Translator\Translator\TranslationScanner;
 
 class TranslationScannerTest extends TestCase
 {
-    /** @var string */
-    private $fixturesDir;
-
-    /** @var TranslationScanner */
-    private $scanner;
+    private string $fixturesDir;
+    private TranslationScanner $scanner;
 
     protected function setUp(): void
     {

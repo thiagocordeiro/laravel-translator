@@ -11,11 +11,10 @@ use Translator\Translator\TranslationRepository;
 
 class LaravelJsonTranslationRepository implements TranslationRepository
 {
-    /** @var ConfigLoader */
-    private $config;
+    private ConfigLoader $config;
 
     /** @var array<string, array<string>> */
-    private $fileCache = [];
+    private array $fileCache = [];
 
     public function __construct(ConfigLoader $config)
     {

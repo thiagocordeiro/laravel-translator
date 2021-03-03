@@ -10,14 +10,13 @@ use Translator\Translator\TranslationService;
  */
 class TranslatorCommand extends Command
 {
-    /** @var string */
+    /** @inheritdoc */
     protected $signature = 'translator:update';
 
-    /** @var string */
+    /** @inheritdoc */
     protected $description = 'Search new keys and update translation file';
 
-    /** @var TranslationService */
-    private $service;
+    private TranslationService $service;
 
     public function __construct(TranslationService $service)
     {

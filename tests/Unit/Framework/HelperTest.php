@@ -6,12 +6,11 @@ use PHPUnit\Framework\TestCase;
 
 class HelperTest extends TestCase
 {
-    /** @var string */
-    private $testDir;
+    private string $testDir;
 
     protected function setUp(): void
     {
-        $this->testDir = realpath(__DIR__.'/../..') ?? '';
+        $this->testDir = realpath(__DIR__ . '/../..') ?? '';
     }
 
     public function testGlobRecursive(): void
@@ -36,9 +35,7 @@ class HelperTest extends TestCase
      */
     private function removeRelativePath(array $files): array
     {
-        return array_map(function (string $file): string {
-            return str_replace($this->testDir, '', $file);
-        }, $files);
+        return array_map(fn (string $file): string => str_replace($this->testDir, '', $file), $files);
     }
 
     /**
@@ -47,8 +44,6 @@ class HelperTest extends TestCase
      */
     private function replaceDirectorySeparators(array $files): array
     {
-        return array_map(function (string $file): string {
-            return str_replace('\\', '/', $file);
-        }, $files);
+        return array_map(fn (string $file): string => str_replace('\\', '/', $file), $files);
     }
 }

@@ -7,14 +7,9 @@ use Translator\Translator\Exception\InvalidExtensionsConfiguration;
 
 class TranslationService
 {
-    /** @var ConfigLoader */
-    private $config;
-
-    /** @var TranslationScanner */
-    private $scanner;
-
-    /** @var TranslationRepository */
-    private $repository;
+    private ConfigLoader $config;
+    private TranslationScanner $scanner;
+    private TranslationRepository $repository;
 
     public function __construct(ConfigLoader $config, TranslationScanner $scanner, TranslationRepository $repository)
     {

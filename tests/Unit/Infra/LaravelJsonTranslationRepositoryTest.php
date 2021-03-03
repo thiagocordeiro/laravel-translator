@@ -13,18 +13,16 @@ use Translator\Translator\Translation;
 
 class LaravelJsonTranslationRepositoryTest extends TestCase
 {
-    /** @var string */
-    private $translationPath;
+    private string $translationPath;
 
     /** @var MockObject|ConfigLoader */
-    private $configLoader;
+    private ConfigLoader $configLoader;
 
-    /** @var LaravelJsonTranslationRepository */
-    private $repository;
+    private LaravelJsonTranslationRepository $repository;
 
     protected function setUp(): void
     {
-        $this->translationPath = realpath(__DIR__.'/../../Fixtures/translations');
+        $this->translationPath = realpath(__DIR__ . '/../../Fixtures/translations');
         $this->configLoader = $this->createMock(ConfigLoader::class);
         $this->configLoader
             ->method('output')

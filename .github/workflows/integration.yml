@@ -8,18 +8,21 @@ on:
 
 jobs:
   integration:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
 
     - name: Install Laravel
       run: composer create-project --prefer-dist laravel/laravel blog
 
     - name: Require translator package
       run: composer require thiagocordeiro/laravel-translator:dev-master#$GITHUB_SHA -d blog/
-      run: composer require thiagocordeiro/laravel-translator:dev-master#f650dbc11cc801079d16c297890ceed6602e81e9 -d blog/
 
     - name: Copy Fixtures 1
       run: cp -R tests/Fixtures/App/Functions blog/app
