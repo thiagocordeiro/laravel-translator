@@ -4,11 +4,8 @@ namespace Translator\Translator;
 
 class Translation
 {
-    /** @var string */
-    private $key;
-
-    /** @var string */
-    private $value;
+    private string $key;
+    private string $value;
 
     public function __construct(string $key, string $value)
     {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit\Translator\Translator;
+namespace Translator\Tests\Unit\Translator;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -12,34 +12,29 @@ use Translator\Translator\TranslationService;
 
 class TranslationServiceTest extends TestCase
 {
-    /** @var string */
-    private $fixturesDir;
+    private string $fixturesDir;
 
     /** @var MockObject|ConfigLoader */
-    private $configLoader;
-
-    /** @var MockObject|TranslationScanner */
-    private $scanner;
+    private ConfigLoader $configLoader;
 
     /** @var MockObject|TranslationRepository */
-    private $repository;
+    private TranslationRepository $repository;
 
-    /** @var TranslationService */
-    private $service;
+    private TranslationService $service;
 
     protected function setUp(): void
     {
-        $this->fixturesDir = realpath(__DIR__.'/../../Fixtures');
+        $this->fixturesDir = realpath(__DIR__ . '/../../Fixtures');
 
         $this->configLoader = $this->createMock(ConfigLoader::class);
         $this->configLoader
             ->method('languages')
             ->willReturn(['pt']);
 
-        $this->scanner = new TranslationScanner();
+        $scanner = new TranslationScanner();
         $this->repository = $this->createMock(TranslationRepository::class);
 
-        $this->service = new TranslationService($this->configLoader, $this->scanner, $this->repository);
+        $this->service = new TranslationService($this->configLoader, $scanner, $this->repository);
     }
 
     public function testShouldScanAndSaveKeys(): void
@@ -49,7 +44,7 @@ class TranslationServiceTest extends TestCase
             ->willReturn(['php']);
         $this->configLoader
             ->method('directories')
-            ->willReturn([$this->fixturesDir.'/App/View']);
+            ->willReturn([$this->fixturesDir . '/App/View']);
 
         $translations = [
             [new Translation('Welcome, :name', '')],
@@ -74,7 +69,7 @@ class TranslationServiceTest extends TestCase
     {
         $this->configLoader
             ->method('directories')
-            ->willReturn([$this->fixturesDir.'/App/Functions/Lang']);
+            ->willReturn([$this->fixturesDir . '/App/Functions/Lang']);
         $this->configLoader
             ->method('extensions')
             ->willReturn(['php']);

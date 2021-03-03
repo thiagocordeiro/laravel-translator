@@ -1,4 +1,4 @@
-name: Tests
+name: Unit Tests
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   tests:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +30,7 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Check code standards
-      run: composer run cs:check
+      run: composer run test:cs
 
     - name: Check static analysis
       run: composer run test:stan

@@ -1,14 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Fixtures\App\Functions\UnderscoreUnderscore;
+namespace Translator\Tests\Fixtures\App\Functions\UnderscoreUnderscore;
 
 class UnderscoreUnderscoreTranslation
 {
-    /** @var string */
-    private $foo;
-
-    /** @var string */
-    private $bar;
+    private string $foo;
+    private string $bar;
 
     public function __construct(string $foo, string $bar)
     {

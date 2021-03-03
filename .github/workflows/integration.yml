@@ -3,12 +3,9 @@ name: Integration Test
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   integration:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +15,7 @@ jobs:
       run: composer create-project --prefer-dist laravel/laravel blog
 
     - name: Require translator package
-      run: composer require thiagocordeiro/laravel-translator:dev-master#$GITHUB_SHA -d blog/
+      run: composer require thiagocordeiro/laravel-translator:dev-master -d blog/
 
     - name: Copy Fixtures 1
       run: cp -R tests/Fixtures/App/Functions blog/app

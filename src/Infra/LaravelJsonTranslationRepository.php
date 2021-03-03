@@ -11,11 +11,10 @@ use Translator\Translator\TranslationRepository;
 
 class LaravelJsonTranslationRepository implements TranslationRepository
 {
-    /** @var ConfigLoader */
-    private $config;
+    private ConfigLoader $config;
 
-    /** @var array<string[]> */
-    private $fileCache = [];
+    /** @var array<string, array<string>> */
+    private array $fileCache = [];
 
     public function __construct(ConfigLoader $config)
     {
@@ -56,6 +55,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
     /**
      * @throws TranslationFileDoesNotExistForLanguage
      * @throws InvalidTranslationFile
+     * @return array<string>
      */
     private function getTranslations(string $language): array
     {
@@ -70,7 +70,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
     {
         $directory = $this->config->output();
 
-        return $directory."/{$language}.json";
+        return $directory . "/{$language}.json";
     }
 
     /**
@@ -105,7 +105,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
     {
         file_put_contents(
             $this->getFileNameForLanguage($language),
-            json_encode($this->fileCache[$language], JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE)
+            json_encode($this->fileCache[$language], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
     }
 }
