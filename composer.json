@@ -1,12 +1,14 @@
 {
-  "name": "thiagocordeiro/laravel-translator",
+  "name": "cosnavel/laravel-translator",
   "description": "Search translation keys and insert into json to be translated",
   "type": "project",
   "license": "MIT",
   "authors": [
     {
-      "name": "Thiago Cordeiro",
-      "email": "thiagoguetten@gmail.com"
+        "name": "Cosnavel",
+        "email": "niclasdevelop@gmail.com",
+        "homepage": "https://niclaskahlmeier.de",
+        "role": "Developer"
     }
   ],
   "require": {
