@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Translator\Translator;
 
@@ -47,6 +49,7 @@ class TranslationScanner
             return array_merge(
                 $keys,
                 $this->getKeysFromFunction('lang', $content),
+                $this->getKeysFromFunction('trans', $content),
                 $this->getKeysFromFunction('__', $content)
             );
         }, []);
@@ -71,7 +74,7 @@ class TranslationScanner
         return array_reduce($matches, function (array $keys, string $match) {
             $quote = $match[0];
             $match = trim($match, $quote);
-            $key = ($quote === '"') ? stripcslashes($match) : str_replace(["\\'", "\\\\"], ["'", "\\"], $match);
+            $key = ($quote === '"') ? stripcslashes($match) : str_replace(["\\'", '\\\\'], ["'", '\\'], $match);
 
             return $key ?
                 array_merge($keys, [$key => new Translation($key, '')]) :
