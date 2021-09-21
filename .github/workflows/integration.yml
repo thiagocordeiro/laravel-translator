@@ -2,7 +2,7 @@ name: Integration Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   integration:
@@ -37,10 +37,3 @@ jobs:
 
     - name: Check created files
       run: cd blog ; php integration.php
-
-
-
-
-
-
-
