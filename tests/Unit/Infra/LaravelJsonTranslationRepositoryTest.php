@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Translator\Tests\Unit\Infra;
 
@@ -17,7 +19,7 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->translationPath = realpath(__DIR__ . '/../../Fixtures/translations');
+        $this->translationPath = realpath(__DIR__.'/../../Fixtures/translations');
         $configLoader = $this->createMock(ConfigLoader::class);
         $configLoader
             ->method('output')
@@ -85,7 +87,7 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
         $this->repository->save($translation, 'fr');
 
         $josn = json_decode(file_get_contents("$this->translationPath/fr.json"), true);
-        $this->assertEquals(['I\'ll be back' => ''], $josn);
+        $this->assertEquals(['I\'ll be back' => 'I\'ll be back'], $josn);
     }
 
     public function testWhenTryingToLoadAnInvalidJsonFileThenThrowException(): void
