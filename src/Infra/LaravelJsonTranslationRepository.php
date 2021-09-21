@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Translator\Infra;
 
@@ -45,7 +47,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
             throw new UnableToSaveTranslationKeyAlreadyExists($translation, $language);
         }
 
-        $translations[$translation->getKey()] = $translation->getValue();
+        $translations[$translation->getKey()] = $translation->getKey();
 
         $this->fileCache[$language] = $translations;
 
@@ -59,7 +61,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
      */
     private function getTranslations(string $language): array
     {
-        if (!isset($this->fileCache[$language])) {
+        if (! isset($this->fileCache[$language])) {
             $this->fileCache[$language] = $this->readFile($language);
         }
 
@@ -70,7 +72,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
     {
         $directory = $this->config->output();
 
-        return $directory . "/{$language}.json";
+        return $directory."/{$language}.json";
     }
 
     /**
@@ -82,13 +84,13 @@ class LaravelJsonTranslationRepository implements TranslationRepository
     {
         $filename = $this->getFileNameForLanguage($language);
 
-        if (!file_exists($filename)) {
+        if (! file_exists($filename)) {
             throw new TranslationFileDoesNotExistForLanguage($language);
         }
 
         $content = file_get_contents($filename);
 
-        if (!$content) {
+        if (! $content) {
             throw new InvalidTranslationFile($language);
         }
 
