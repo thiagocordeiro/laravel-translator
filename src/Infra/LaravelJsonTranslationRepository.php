@@ -70,7 +70,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
     {
         $directory = $this->config->output();
 
-        return $directory . "/{$language}.json";
+        return $directory . DIRECTORY_SEPARATOR . "{$language}.json";
     }
 
     /**
