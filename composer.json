@@ -29,6 +29,11 @@
       "@test:unit"
     ]
   },
+  "config": {
+    "platform": {
+      "php": "7.4.28"
+    }
+  },
   "autoload": {
     "psr-4": {
       "Translator\\": "src/"
