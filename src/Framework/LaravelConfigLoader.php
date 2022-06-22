@@ -19,7 +19,7 @@ class LaravelConfigLoader implements ConfigLoader
      */
     public function defaultLanguage(): string
     {
-        return $this->load('default_language');
+        return $this->load('default_language') ?? 'en';
     }
 
     /**
@@ -27,7 +27,7 @@ class LaravelConfigLoader implements ConfigLoader
      */
     public function useKeysAsDefaultValue(): bool
     {
-        return $this->load('use_keys_as_default_value');
+        return !! $this->load('use_keys_as_default_value');
     }
 
     /**
