@@ -17,6 +17,22 @@ class LaravelConfigLoader implements ConfigLoader
     /**
      * @inheritDoc
      */
+    public function defaultLanguage(): string
+    {
+        return $this->load('default_language');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function useKeysAsDefaultValue(): bool
+    {
+        return $this->load('use_keys_as_default_value');
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function directories(): array
     {
         return $this->loadConfigInArray('directories');

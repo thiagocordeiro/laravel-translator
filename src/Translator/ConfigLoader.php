@@ -12,6 +12,20 @@ interface ConfigLoader
     public function languages(): array;
 
     /**
+     * Specifies the default language.
+     *
+     * @return string
+     */
+    public function defaultLanguage(): string;
+
+    /**
+     * Defines if the keys for the default language should be used as the default value
+     *
+     * @return bool
+     */
+    public function useKeysAsDefaultValue(): bool;
+
+    /**
      * Load the list of directories to be scanned
      *
      * @return array<string>
