@@ -45,7 +45,11 @@ class LaravelJsonTranslationRepository implements TranslationRepository
             throw new UnableToSaveTranslationKeyAlreadyExists($translation, $language);
         }
 
-        $translations[$translation->getKey()] = $translation->getValue();
+        if (empty($translation->getValue()) && $this->config->defaultLanguage() === $language && $this->config->useKeysAsDefaultValue()) {
+            $translations[$translation->getKey()] = $translation->getKey();
+        } else {
+            $translations[$translation->getKey()] = $translation->getValue();
+        }
 
         $this->fileCache[$language] = $translations;
 
