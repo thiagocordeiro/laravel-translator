@@ -18,14 +18,22 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
     protected function setUp(): void
     {
         $this->translationPath = realpath(__DIR__ . '/../../Fixtures/translations');
+
+        $configLoader = $this->setupConfigLoader();
+
+        file_put_contents("{$this->translationPath}/fr.json", '{}');
+
+        $this->repository = new LaravelJsonTranslationRepository($configLoader);
+    }
+
+    protected function setupConfigLoader()
+    {
         $configLoader = $this->createMock(ConfigLoader::class);
         $configLoader
             ->method('output')
             ->willReturn($this->translationPath);
 
-        file_put_contents("{$this->translationPath}/fr.json", '{}');
-
-        $this->repository = new LaravelJsonTranslationRepository($configLoader);
+        return $configLoader;
     }
 
     public function testWhenFileForGivenLanguageDoesNotExistThenThrowException(): void
@@ -84,8 +92,8 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
 
         $this->repository->save($translation, 'fr');
 
-        $josn = json_decode(file_get_contents("$this->translationPath/fr.json"), true);
-        $this->assertEquals(['I\'ll be back' => ''], $josn);
+        $json = json_decode(file_get_contents("$this->translationPath/fr.json"), true);
+        $this->assertEquals(['I\'ll be back' => ''], $json);
     }
 
     public function testWhenTryingToLoadAnInvalidJsonFileThenThrowException(): void
@@ -95,5 +103,30 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
         $this->expectException(InvalidTranslationFile::class);
 
         $this->repository->save($translation, 'ru');
+    }
+
+    public function testSettingDefaultLanguageKeyAsValue(): void
+    {
+        $configLoader = $this->setupConfigLoader();
+        $configLoader->method('languages')->willReturn(['en', 'de']);
+        $configLoader->method('defaultLanguage')->willReturn('en');
+        $configLoader->method('useKeysAsDefaultValue')->willReturn(true);
+
+        file_put_contents("{$this->translationPath}/en.json", '{}');
+        file_put_contents("{$this->translationPath}/de.json", '{}');
+
+        $repository = new LaravelJsonTranslationRepository($configLoader);
+
+        $translation = new Translation("I'll be back", '');
+        $repository->save($translation, 'en');
+
+        $translation = new Translation("I'll be back", '');
+        $repository->save($translation, 'de');
+
+        $json = json_decode(file_get_contents("$this->translationPath/en.json"), true);
+        $this->assertEquals(['I\'ll be back' => 'I\'ll be back'], $json);
+
+        $json = json_decode(file_get_contents("$this->translationPath/de.json"), true);
+        $this->assertEquals(['I\'ll be back' => ''], $json);
     }
 }
