@@ -108,12 +108,12 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
     public function testSettingDefaultLanguageKeyAsValue(): void
     {
         $configLoader = $this->setupConfigLoader();
-        $configLoader->method('languages')->willReturn(['en', 'de']);
+        $configLoader->method('languages')->willReturn(['en', 'bg']);
         $configLoader->method('defaultLanguage')->willReturn('en');
         $configLoader->method('useKeysAsDefaultValue')->willReturn(true);
 
         file_put_contents("{$this->translationPath}/en.json", '{}');
-        file_put_contents("{$this->translationPath}/de.json", '{}');
+        file_put_contents("{$this->translationPath}/bg.json", '{}');
 
         $repository = new LaravelJsonTranslationRepository($configLoader);
 
@@ -121,12 +121,12 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
         $repository->save($translation, 'en');
 
         $translation = new Translation("I'll be back", '');
-        $repository->save($translation, 'de');
+        $repository->save($translation, 'bg');
 
         $json = json_decode(file_get_contents("$this->translationPath/en.json"), true);
         $this->assertEquals(['I\'ll be back' => 'I\'ll be back'], $json);
 
-        $json = json_decode(file_get_contents("$this->translationPath/de.json"), true);
+        $json = json_decode(file_get_contents("$this->translationPath/bg.json"), true);
         $this->assertEquals(['I\'ll be back' => ''], $json);
     }
 }

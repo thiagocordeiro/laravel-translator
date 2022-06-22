@@ -84,7 +84,7 @@ First, publish the configuration file.
 php artisan vendor:publish --provider="Translator\Framework\TranslatorServiceProvider"
 ```
 
-On ``config/translator.php`` you can change the default values of `languages`, `directories`, `output`
+On ``config/translator.php`` you can change the default values of `languages`, `default_language`, `use_keys_as_default_value`, `directories`, `output`
 or if you have a different implementation to save/load translations, you can create your own `translation_repository`
 and replace on `container` config 
 
@@ -105,6 +105,9 @@ return [
     ],
 ];
 ```
+
+## Using your keys as the default value
+For the default language, most of the time you wish to use the key values as the default translation value. You can enable this by setting the config option `use_keys_as_default_value` to `true`, and defining a `default_language` to your language. This is by default configured to `en`, but can be overruled by setting the `default_language` key in your config.
 
 ### Tips
  - Laravel `trans(...)` function doesn't use json files for translation, so you'd better using `__(...)` or it's alias `lang(...)` on php files and `@lang(...)` or `{{ lang(...) }}` on blade files.
