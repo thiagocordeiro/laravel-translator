@@ -19,7 +19,13 @@ class LaravelConfigLoader implements ConfigLoader
      */
     public function defaultLanguage(): string
     {
-        return (string) $this->load('default_language') ?? 'en';
+        $defaultLanguage = $this->loadConfigInString('default_language');
+
+        if ($defaultLanguage == '') {
+            return 'en';
+        }
+
+        return $defaultLanguage;
     }
 
     /**
