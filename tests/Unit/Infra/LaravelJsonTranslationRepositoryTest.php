@@ -26,6 +26,9 @@ class LaravelJsonTranslationRepositoryTest extends TestCase
         $this->repository = new LaravelJsonTranslationRepository($configLoader);
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|ConfigLoader
+     */
     protected function setupConfigLoader()
     {
         $configLoader = $this->createMock(ConfigLoader::class);
