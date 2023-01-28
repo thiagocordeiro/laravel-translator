@@ -45,6 +45,9 @@ class TranslationServiceTest extends TestCase
         $this->configLoader
             ->method('directories')
             ->willReturn([$this->fixturesDir . '/App/View']);
+        $this->configLoader
+            ->method('functions')
+            ->willReturn(['lang', '__']);
 
         $translations = [
             [new Translation('Welcome, :name', '')],
@@ -70,6 +73,9 @@ class TranslationServiceTest extends TestCase
         $this->configLoader
             ->method('directories')
             ->willReturn([$this->fixturesDir . '/App/Functions/Lang']);
+        $this->configLoader
+            ->method('functions')
+            ->willReturn(['lang', '__']);
         $this->configLoader
             ->method('extensions')
             ->willReturn(['php']);

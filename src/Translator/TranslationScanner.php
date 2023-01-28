@@ -4,17 +4,20 @@ namespace Translator\Translator;
 
 use Translator\Translator\Exception\InvalidDirectoriesConfiguration;
 use Translator\Translator\Exception\InvalidExtensionsConfiguration;
+use Translator\Translator\Exception\InvalidFunctionsConfiguration;
 
 class TranslationScanner
 {
     /**
      * @param string[] $extensions
      * @param string[] $directories
+     * @param string[] $functions
      * @return Translation[]
      * @throws InvalidDirectoriesConfiguration
      * @throws InvalidExtensionsConfiguration
+     * @throws InvalidFunctionsConfiguration
      */
-    public function scan(array $extensions, array $directories): array
+    public function scan(array $extensions, array $directories, array $functions): array
     {
         if (empty($extensions)) {
             throw new InvalidExtensionsConfiguration();
@@ -24,30 +27,46 @@ class TranslationScanner
             throw new InvalidDirectoriesConfiguration();
         }
 
+        if (empty($functions)) {
+            throw new InvalidFunctionsConfiguration();
+        }
+
         $ext = implode(',', $extensions);
 
-        return array_reduce($directories, function (array $collection, string $directory) use ($ext): array {
-            return array_merge(
-                $collection,
-                $this->scanDirectory($directory, $ext)
-            );
-        }, []);
+        return array_reduce(
+            $directories,
+            function (array $collection, string $directory) use ($ext, $functions): array {
+                return array_merge(
+                    $collection,
+                    $this->scanDirectory($directory, $ext, $functions)
+                );
+            },
+            []
+        );
     }
 
     /**
+     * @param string[] $functions
      * @return Translation[]
      */
-    private function scanDirectory(string $path, string $extensions): array
+    private function scanDirectory(string $path, string $extensions, array $functions): array
     {
         $files = glob_recursive("{$path}/*.{{$extensions}}", GLOB_BRACE);
 
-        return array_reduce($files, function (array $keys, $file): array {
+        return array_reduce($files, function (array $keys, $file) use ($functions): array {
             $content = $this->getFileContent($file);
+
+            $keysFromFunctions = array_reduce(
+                $functions,
+                function (array $keys, string $function) use ($content): array {
+                    return array_merge($keys, $this->getKeysFromFunction($function, $content));
+                },
+                []
+            );
 
             return array_merge(
                 $keys,
-                $this->getKeysFromFunction('lang', $content),
-                $this->getKeysFromFunction('__', $content)
+                $keysFromFunctions
             );
         }, []);
     }

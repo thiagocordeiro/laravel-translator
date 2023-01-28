@@ -11,6 +11,7 @@ return [
     ],
     'output' => resource_path('lang'),
     'extensions' => ['php'],
+    'functions' => ['lang', '__'],
     'container' => [
         'config_loader' => LaravelConfigLoader::class,
         'translation_repository' => LaravelJsonTranslationRepository::class,
