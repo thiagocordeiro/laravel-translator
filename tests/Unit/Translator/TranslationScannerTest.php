@@ -4,6 +4,7 @@ namespace Translator\Tests\Unit\Translator;
 
 use PHPUnit\Framework\TestCase;
 use Translator\Translator\Exception\InvalidDirectoriesConfiguration;
+use Translator\Translator\Exception\InvalidFunctionsConfiguration;
 use Translator\Translator\Translation;
 use Translator\Translator\TranslationScanner;
 
@@ -24,14 +25,23 @@ class TranslationScannerTest extends TestCase
 
         $this->expectException(InvalidDirectoriesConfiguration::class);
 
-        $this->scanner->scan(['php'], $directories);
+        $this->scanner->scan(['php'], $directories, ['lang', '__']);
+    }
+
+    public function testWhenFunctionsToScanAreNotSetThenThrowException(): void
+    {
+        $functions = [];
+
+        $this->expectException(InvalidFunctionsConfiguration::class);
+
+        $this->scanner->scan(['php'], ['App'], $functions);
     }
 
     public function testShouldFindTranslationsForUnderscoreFunctions(): void
     {
         $__dir = $this->fixturesDir . '/App/Functions/UnderscoreUnderscore';
 
-        $translations = $this->scanner->scan(['php'], [$__dir]);
+        $translations = $this->scanner->scan(['php'], [$__dir], ['lang', '__']);
 
         $this->assertEquals(
             [
@@ -45,7 +55,7 @@ class TranslationScannerTest extends TestCase
     {
         $langDir = $this->fixturesDir . '/App/Functions/Lang';
 
-        $translations = $this->scanner->scan(['php'], [$langDir]);
+        $translations = $this->scanner->scan(['php'], [$langDir], ['lang', '__']);
 
         $this->assertEquals(
             [
@@ -59,7 +69,7 @@ class TranslationScannerTest extends TestCase
     {
         $langDir = $this->fixturesDir . '/App/View';
 
-        $translations = $this->scanner->scan(['vue'], [$langDir]);
+        $translations = $this->scanner->scan(['vue'], [$langDir], ['lang', '__']);
 
         $this->assertEquals(
             [
@@ -74,7 +84,7 @@ class TranslationScannerTest extends TestCase
     {
         $viewDir = $this->fixturesDir . '/App/View';
 
-        $translations = $this->scanner->scan(['php'], [$viewDir]);
+        $translations = $this->scanner->scan(['php'], [$viewDir], ['lang', '__']);
 
         $this->assertEquals(
             [
@@ -104,7 +114,7 @@ class TranslationScannerTest extends TestCase
     {
         $appDir = $this->fixturesDir . '/App';
 
-        $translations = $this->scanner->scan(['php'], [$appDir]);
+        $translations = $this->scanner->scan(['php'], [$appDir], ['lang', '__']);
 
         $this->assertEquals(
             [

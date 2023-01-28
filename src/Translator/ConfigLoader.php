@@ -39,4 +39,11 @@ interface ConfigLoader
      * @return array<string>
      */
     public function extensions(): array;
+
+    /**
+     * Load the list of functions to be scanned
+     *
+     * @return array<string>
+     */
+    public function functions(): array;
 }

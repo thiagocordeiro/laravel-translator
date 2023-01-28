@@ -26,8 +26,9 @@ class TranslationService
     {
         $directories = $this->config->directories();
         $extensions = $this->config->extensions();
+        $functions = $this->config->functions();
 
-        $translations = $this->scanner->scan($extensions, $directories);
+        $translations = $this->scanner->scan($extensions, $directories, $functions);
 
         $this->storeTranslations($translations);
     }

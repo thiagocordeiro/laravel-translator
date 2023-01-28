@@ -61,6 +61,14 @@ class LaravelConfigLoader implements ConfigLoader
     }
 
     /**
+     * @inheritDoc
+     */
+    public function functions(): array
+    {
+        return $this->loadConfigInArray('functions');
+    }
+
+    /**
      * @return array<string>
      */
     private function loadConfigInArray(string $key): array
