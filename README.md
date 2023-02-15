@@ -81,6 +81,16 @@ also you can use params on translation keys
     "Just scanned key": ""
 }
 ```
+In **Laravel 9** the 'lang' directory is moved up one level so u need to change the output.
+
+First publish config:
+```bash
+php artisan vendor:publish --provider="Translator\Framework\TranslatorServiceProvider"
+```
+And change output to:
+```php
+  'output' => base_path('lang'),
+```
 
 ### Customization
 
