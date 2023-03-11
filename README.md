@@ -136,3 +136,9 @@ For the default language, most of the time you wish to use the key values as the
 
 - View for translate phrases;
 - Integration with some translation api (google or deepl) for automatic translations
+
+
+### Supporting
+If you feel like supporting changes then you can send donations to the address below.
+
+Bitcoin Address: bc1qfyudlcxqnvqzxxgpvsfmadwudg4znk2z3asj9h
