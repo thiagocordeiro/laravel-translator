@@ -27,9 +27,8 @@ class TranslationService
         $directories = $this->config->directories();
         $extensions = $this->config->extensions();
         $functions = $this->config->functions();
-
+        
         $translations = $this->scanner->scan($extensions, $directories, $functions);
-
         $this->storeTranslations($translations);
     }
 
@@ -46,12 +45,10 @@ class TranslationService
     private function storeTranslation(Translation $translation): void
     {
         $languages = $this->config->languages();
-
         array_map(function (string $language) use ($translation): void {
             if ($this->repository->exists($translation, $language)) {
                 return;
             }
-
             $this->repository->save($translation, $language);
         }, $languages);
     }
