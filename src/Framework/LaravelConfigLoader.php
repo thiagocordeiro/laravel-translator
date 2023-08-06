@@ -33,7 +33,7 @@ class LaravelConfigLoader implements ConfigLoader
      */
     public function useKeysAsDefaultValue(): bool
     {
-        return !! $this->load('use_keys_as_default_value');
+        return !!$this->load('use_keys_as_default_value');
     }
 
     /**
@@ -41,7 +41,12 @@ class LaravelConfigLoader implements ConfigLoader
      */
     public function directories(): array
     {
-        return $this->loadConfigInArray('directories');
+        $directories = $this->loadConfigInArray('directories');
+        if ($this->loadConfigInBool('modules')) {
+            array_push($directories, $this->loadConfigInString('modules_dir'));
+            return $directories;
+        }
+        return $directories;
     }
 
     /**
@@ -69,6 +74,30 @@ class LaravelConfigLoader implements ConfigLoader
     }
 
     /**
+     * @inheritDoc
+     */
+    public function modules(): bool
+    {
+        return $this->loadConfigInBool('modules');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function modulesDirName(): string
+    {
+        return $this->loadConfigInString('modules_dir');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function modulesOutput(): bool
+    {
+        return $this->loadConfigInBool('modules_output');
+    }
+
+    /**
      * @return array<string>
      */
     private function loadConfigInArray(string $key): array
@@ -88,6 +117,17 @@ class LaravelConfigLoader implements ConfigLoader
 
         if (!is_string($value)) {
             return '';
+        }
+
+        return $value;
+    }
+
+    private function loadConfigInBool(string $key): bool
+    {
+        $value = $this->load($key);
+
+        if (!is_bool($value)) {
+            return false;
         }
 
         return $value;
