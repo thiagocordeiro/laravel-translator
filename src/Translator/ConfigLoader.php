@@ -46,4 +46,22 @@ interface ConfigLoader
      * @return array<string>
      */
     public function functions(): array;
+
+    /**
+     * Load name of Module directory
+     * @return string
+     */
+    public function modulesDirName(): string;
+
+    /**
+     * Load status output path of modules language
+     * @return bool
+     */
+    public function modulesOutput(): bool;
+
+    /**
+     * Load module status
+     * @return bool
+     */
+    public function modules(): bool;
 }

@@ -27,8 +27,7 @@ class LaravelJsonTranslationRepository implements TranslationRepository
      */
     public function exists(Translation $translation, string $language): bool
     {
-        $translations = $this->getTranslations($language);
-
+        $translations = $this->getTranslations($language, $translation->getModule());
         return isset($translations[$translation->getKey()]);
     }
 
@@ -39,19 +38,23 @@ class LaravelJsonTranslationRepository implements TranslationRepository
      */
     public function save(Translation $translation, string $language): void
     {
-        $translations = $this->getTranslations($language);
-
+        $translations = $this->getTranslations($language, $translation->getModule());
         if ($this->exists($translation, $language)) {
             throw new UnableToSaveTranslationKeyAlreadyExists($translation, $language);
         }
 
-        $translations[$translation->getKey()] = $this->useKeyAsDefaultValue($translation, $language) ?
-            $translation->getKey() :
-            $translation->getValue();
-
-        $this->fileCache[$language] = $translations;
-
-        $this->writeFile($language);
+        if (!empty($translation->getModule()) && $this->config->modules()) {
+            $translations[$translation->getKey()] = $this->useKeyAsDefaultValue($translation, $language) ?
+                $translation->getKey() :
+                $translation->getValue();
+            $this->fileCache[$translation->getModule()][$language] = $translations;
+        } else {
+            $translations[$translation->getKey()] = $this->useKeyAsDefaultValue($translation, $language) ?
+                $translation->getKey() :
+                $translation->getValue();
+            $this->fileCache[$language] = $translations;
+        }
+        $this->writeFile($language, $translation->getModule());
     }
 
     /**
@@ -59,20 +62,39 @@ class LaravelJsonTranslationRepository implements TranslationRepository
      * @throws InvalidTranslationFile
      * @return array<string>
      */
-    private function getTranslations(string $language): array
+    private function getTranslations(string $language, string $module = ''): array
     {
-        if (!isset($this->fileCache[$language])) {
-            $this->fileCache[$language] = $this->readFile($language);
+        if ($this->config->modules() && !empty($module)) {
+            if (!isset($this->fileCache[$module][$language])) {
+                $this->fileCache[$module][$language] = $this->readFile($language, $module);
+            }
+            return $this->fileCache[$module][$language];
+        } else {
+            if (!isset($this->fileCache[$language])) {
+                $this->fileCache[$language] = $this->readFile($language) ?? [];
+            }
+            return $this->fileCache[$language];
         }
-
-        return $this->fileCache[$language];
     }
 
-    private function getFileNameForLanguage(string $language): string
+    private function getFileNameForLanguage(string $language, string $module = ''): string
     {
-        $directory = $this->config->output();
+        if ($this->config->modules() && !empty($module)) {
+            if ($this->config->modulesOutput()) {
+                $directory = $this->config->modulesDirName().'/'.$module.'/Resources/lang';
+            } else {
+                $directory = $this->config->output()."/modules/{$module}";
+            }
+        } else {
+            $directory = $this->config->output();
+        }
+        return $directory."/{$language}.json";
+    }
 
-        return $directory . "/{$language}.json";
+    private function getFileNameForModuleLanguage(string $language, string $module): string
+    {
+        $directory = $this->config->modulesDirName().'/'.$module.'/Resources/lang';
+        return $directory."/{$language}.json";
     }
 
     /**
@@ -80,16 +102,32 @@ class LaravelJsonTranslationRepository implements TranslationRepository
      * @throws InvalidTranslationFile
      * @throws TranslationFileDoesNotExistForLanguage
      */
-    private function readFile(string $language): array
+    private function readFile(string $language, string $module = ''): array
     {
-        $filename = $this->getFileNameForLanguage($language);
+        $filename = $this->getFileNameForLanguage($language, $module);
+        $sp = explode('/', $filename);
+        unset($sp[count($sp) - 1]);
+        $sir_path = implode('/', $sp);
+
+        if (!is_dir($sir_path)) {
+            mkdir($sir_path, 0755, true);
+        }
 
         if (!file_exists($filename)) {
-            throw new TranslationFileDoesNotExistForLanguage($language);
+            $file = fopen($filename, 'w+');
+
+            $mcontent = '[]';
+            if ($module != '' && !$this->config->modulesOutput()) {
+                $mfilename = $this->getFileNameForModuleLanguage($language, $module);
+                if (file_exists($mfilename)) {
+                    $mcontent = file_get_contents($mfilename);
+                }
+            }
+            fwrite($file, $mcontent);
+            fclose($file);
         }
 
         $content = file_get_contents($filename);
-
         if (!$content) {
             throw new InvalidTranslationFile($language);
         }
@@ -99,17 +137,19 @@ class LaravelJsonTranslationRepository implements TranslationRepository
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidTranslationFile($language);
         }
-
         return $translations;
     }
 
-    private function writeFile(string $language): void
+    private function writeFile(string $language, string $module = ''): void
     {
-        $content = $this->fileCache[$language];
+        if (!empty($module)) {
+            $content = $this->fileCache[$module][$language];
+        } else {
+            $content = $this->fileCache[$language];
+        }
         ksort($content);
-
         file_put_contents(
-            $this->getFileNameForLanguage($language),
+            $this->getFileNameForLanguage($language, $module),
             json_encode($content, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
         );
     }

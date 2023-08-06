@@ -72,7 +72,7 @@ also you can use params on translation keys
 
 ### Output
 
-`translator:update` command will scan your code to identify new translation keys, then it'll update all json files on `app/resources/lang/` folder appending this keys.
+`translator:update` command will scan your code to identify new translation keys, then it'll auto create if missing and update all json files on `app/resources/lang/` folder appending this keys.
 
 ```json
 {
@@ -81,16 +81,7 @@ also you can use params on translation keys
     "Just scanned key": ""
 }
 ```
-In **Laravel 9** the 'lang' directory is moved up one level so u need to change the output.
-
-First publish config:
-```bash
-php artisan vendor:publish --provider="Translator\Framework\TranslatorServiceProvider"
-```
-And change output to:
-```php
-  'output' => base_path('lang'),
-```
+In **Laravel 9** the 'lang' directory is moved up one level, then it'll auto create if missing and update all json files on `app/lang/` folder.
 
 ### Customization
 
@@ -109,18 +100,47 @@ use Translator\Framework\LaravelConfigLoader;
 use Translator\Infra\LaravelJsonTranslationRepository;
 
 return [
-    'languages' => ['pt-br', 'es'],
+    'languages' => ['en', 'pt-br', 'es'],
+    'default_language' => 'en',
     'directories' => [
-        app_path(),
-        resource_path('views'),
+      app_path(),
+      resource_path('views'),
     ],
+    'output' => (int) app()->version() == 9 ? base_path('lang') : resource_path('lang'),
+    'modules' => false,
+    'modules_output' => false,
+    'modules_dir' => base_path('Modules'),
+    'extensions' => ['php'],
     'functions' => ['lang', '__'],
-    'output' => resource_path('lang'),
     'container' => [
-        'config_loader' => LaravelConfigLoader::class,
-        'translation_repository' => LaravelJsonTranslationRepository::class,
+      'config_loader' => LaravelConfigLoader::class,
+      'translation_repository' => LaravelJsonTranslationRepository::class,
     ],
-];
+    'use_keys_as_default_value' => false,
+  ];
+```
+
+## Usage with Laravel Module
+If you're using Laravel module package, activate some config below:
+
+First publish config:
+```bash
+php artisan vendor:publish --provider="Translator\Framework\TranslatorServiceProvider"
+```
+
+Change some config variables to use with Laravel module:
+
+`module`: `true` to enable or `false` to disable (default is `false`)
+
+`modules_output`: (default is `false`)
++ `true` to set output file to `Resources/lang` of separate `module`
++ `false` to set to `resources/lang/modules`
+
+`modules_dir`: if your Laravel is using different module dir name, change this variable (default is `Modules`)
+```php
+'modules' => false
+'modules_output' => false
+'modules_dir' => base_path('Modules')
 ```
 
 ## Using your keys as the default value
