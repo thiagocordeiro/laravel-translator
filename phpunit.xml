@@ -9,19 +9,19 @@
          processIsolation="false"
          stopOnFailure="false">
 
-    <filter>
-        <whitelist>
-            <directory>src</directory>
-            <exclude>
-                <file>src/Framework/config.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
+  <filter>
+    <whitelist>
+      <directory>src</directory>
+      <exclude>
+        <file>src/Framework/config.php</file>
+      </exclude>
+    </whitelist>
+  </filter>
 
-    <testsuites>
-        <testsuite name="Test Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
+  <testsuites>
+    <testsuite name="Test Suite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 
 </phpunit>

@@ -11,28 +11,28 @@ use Translator\Translator\TranslationRepository;
  */
 class TranslatorServiceProvider extends ServiceProvider
 {
-    public function boot(): void
-    {
-        if ($this->app->runningInConsole()) {
-            $this->commands([TranslatorCommand::class]);
-        }
-
-        $this->setupConfigs();
-        $this->setupContainer();
+  public function boot(): void
+  {
+    if ($this->app->runningInConsole()) {
+      $this->commands([TranslatorCommand::class]);
     }
 
-    private function setupConfigs(): void
-    {
-        $default = __DIR__."/config.php";
-        $custom = base_path("config/translator.php");
+    $this->setupConfigs();
+    $this->setupContainer();
+  }
 
-        $this->mergeConfigFrom($default, 'translator');
-        $this->publishes([$default => $custom], 'config');
-    }
+  private function setupConfigs(): void
+  {
+    $default = __DIR__ . "/config.php";
+    $custom = base_path("config/translator.php");
 
-    private function setupContainer(): void
-    {
-        $this->app->bind(ConfigLoader::class, config('translator.container.config_loader'));
-        $this->app->bind(TranslationRepository::class, config('translator.container.translation_repository'));
-    }
+    $this->mergeConfigFrom($default, 'translator');
+    $this->publishes([$default => $custom], 'config');
+  }
+
+  private function setupContainer(): void
+  {
+    $this->app->bind(ConfigLoader::class, config('translator.container.config_loader'));
+    $this->app->bind(TranslationRepository::class, config('translator.container.translation_repository'));
+  }
 }

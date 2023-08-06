@@ -6,8 +6,8 @@ use Exception;
 
 class InvalidFunctionsConfiguration extends Exception
 {
-    public function __construct()
-    {
-        parent::__construct('Invalid functions configuration');
-    }
+  public function __construct()
+  {
+    parent::__construct('Invalid functions configuration');
+  }
 }

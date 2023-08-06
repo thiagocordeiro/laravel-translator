@@ -12,83 +12,83 @@ use Translator\Translator\TranslationService;
 
 class TranslationServiceTest extends TestCase
 {
-    private string $fixturesDir;
+  private string $fixturesDir;
 
-    /** @var MockObject|ConfigLoader */
-    private ConfigLoader $configLoader;
+  /** @var MockObject|ConfigLoader */
+  private ConfigLoader $configLoader;
 
-    /** @var MockObject|TranslationRepository */
-    private TranslationRepository $repository;
+  /** @var MockObject|TranslationRepository */
+  private TranslationRepository $repository;
 
-    private TranslationService $service;
+  private TranslationService $service;
 
-    protected function setUp(): void
-    {
-        $this->fixturesDir = realpath(__DIR__ . '/../../Fixtures');
+  protected function setUp(): void
+  {
+    $this->fixturesDir = realpath(__DIR__ . '/../../Fixtures');
 
-        $this->configLoader = $this->createMock(ConfigLoader::class);
-        $this->configLoader
-            ->method('languages')
-            ->willReturn(['pt']);
+    $this->configLoader = $this->createMock(ConfigLoader::class);
+    $this->configLoader
+      ->method('languages')
+      ->willReturn(['pt']);
 
-        $scanner = new TranslationScanner();
-        $this->repository = $this->createMock(TranslationRepository::class);
+    $scanner = new TranslationScanner();
+    $this->repository = $this->createMock(TranslationRepository::class);
 
-        $this->service = new TranslationService($this->configLoader, $scanner, $this->repository);
-    }
+    $this->service = new TranslationService($this->configLoader, $scanner, $this->repository);
+  }
 
-    public function testShouldScanAndSaveKeys(): void
-    {
-        $this->configLoader
-            ->method('extensions')
-            ->willReturn(['php']);
-        $this->configLoader
-            ->method('directories')
-            ->willReturn([$this->fixturesDir . '/App/View']);
-        $this->configLoader
-            ->method('functions')
-            ->willReturn(['lang', '__']);
+  public function testShouldScanAndSaveKeys(): void
+  {
+    $this->configLoader
+      ->method('extensions')
+      ->willReturn(['php']);
+    $this->configLoader
+      ->method('directories')
+      ->willReturn([$this->fixturesDir . '/App/View']);
+    $this->configLoader
+      ->method('functions')
+      ->willReturn(['lang', '__']);
 
-        $translations = [
-            [new Translation('Welcome, :name', '')],
-            [new Translation('Trip to :planet, check-in opens :time', '')],
-            [new Translation('Check offers to :planet', '')],
-            [new Translation('Translations should also work with double quotes.', '')],
-            [new Translation('Shouldn\'t escaped quotes within strings also be correctly added?', '')],
-            [new Translation('Same goes for "double quotes".', '')],
-            [new Translation('String using (parentheses).', '')],
-            [new Translation("Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\", '')],
-        ];
+    $translations = [
+      [new Translation('Welcome, :name', '')],
+      [new Translation('Trip to :planet, check-in opens :time', '')],
+      [new Translation('Check offers to :planet', '')],
+      [new Translation('Translations should also work with double quotes.', '')],
+      [new Translation('Shouldn\'t escaped quotes within strings also be correctly added?', '')],
+      [new Translation('Same goes for "double quotes".', '')],
+      [new Translation('String using (parentheses).', '')],
+      [new Translation("Double quoted string using \"double quotes\", and C-style escape sequences.\n\t\\", '')],
+    ];
 
-        $this->repository
-            ->expects($this->exactly(8))
-            ->method('save')
-            ->withConsecutive(...$translations);
+    $this->repository
+      ->expects($this->exactly(8))
+      ->method('save')
+      ->withConsecutive(...$translations);
 
-        $this->service->scanAndSaveNewKeys();
-    }
+    $this->service->scanAndSaveNewKeys();
+  }
 
-    public function testWhenGivenTranslationAlreadyExistsThenDoNotOverride(): void
-    {
-        $this->configLoader
-            ->method('directories')
-            ->willReturn([$this->fixturesDir . '/App/Functions/Lang']);
-        $this->configLoader
-            ->method('functions')
-            ->willReturn(['lang', '__']);
-        $this->configLoader
-            ->method('extensions')
-            ->willReturn(['php']);
+  public function testWhenGivenTranslationAlreadyExistsThenDoNotOverride(): void
+  {
+    $this->configLoader
+      ->method('directories')
+      ->willReturn([$this->fixturesDir . '/App/Functions/Lang']);
+    $this->configLoader
+      ->method('functions')
+      ->willReturn(['lang', '__']);
+    $this->configLoader
+      ->method('extensions')
+      ->willReturn(['php']);
 
-        $this->repository
-            ->method('exists')
-            ->with(new Translation('Lang: :foo, :bar', ''))
-            ->willReturn(true);
+    $this->repository
+      ->method('exists')
+      ->with(new Translation('Lang: :foo, :bar', ''))
+      ->willReturn(true);
 
-        $this->repository
-            ->expects($this->never())
-            ->method('save');
+    $this->repository
+      ->expects($this->never())
+      ->method('save');
 
-        $this->service->scanAndSaveNewKeys();
-    }
+    $this->service->scanAndSaveNewKeys();
+  }
 }

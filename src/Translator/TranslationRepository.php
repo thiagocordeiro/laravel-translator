@@ -4,7 +4,7 @@ namespace Translator\Translator;
 
 interface TranslationRepository
 {
-    public function exists(Translation $translation, string $language): bool;
+  public function exists(Translation $translation, string $language): bool;
 
-    public function save(Translation $translation, string $language): void;
+  public function save(Translation $translation, string $language): void;
 }
